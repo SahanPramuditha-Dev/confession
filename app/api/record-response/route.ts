@@ -3,21 +3,21 @@ import { recordResponse, recordEvent } from '@/lib/db'
 
 export async function POST(request: NextRequest) {
   try {
-    const { sessionId, question, answer } = await request.json()
+    const body = await request.json()
+    const { sessionId, question, answer } = body
 
     if (!sessionId || !question || !answer) {
+
       return NextResponse.json(
         { error: 'Missing required fields: sessionId, question, answer' },
         { status: 400 }
       )
     }
 
-    const {
-      nameInput,
-      enteredDate,
-      selection,
-      whatsappClicked,
-    } = await request.json().catch(() => ({} as any))
+    const nameInput = body?.nameInput
+    const enteredDate = body?.enteredDate
+    const selection = body?.selection
+    const whatsappClicked = body?.whatsappClicked
 
     // Record the response + separate response_entries doc
     await recordResponse(sessionId, question, answer, {
@@ -26,6 +26,7 @@ export async function POST(request: NextRequest) {
       selection: selection ?? null,
       whatsappClicked: Boolean(whatsappClicked),
     })
+
 
 
     // Also record as an event
