@@ -12,8 +12,21 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Record the response
-    await recordResponse(sessionId, question, answer)
+    const {
+      nameInput,
+      enteredDate,
+      selection,
+      whatsappClicked,
+    } = await request.json().catch(() => ({} as any))
+
+    // Record the response + separate response_entries doc
+    await recordResponse(sessionId, question, answer, {
+      nameInput: nameInput ?? null,
+      enteredDate: enteredDate ?? null,
+      selection: selection ?? null,
+      whatsappClicked: Boolean(whatsappClicked),
+    })
+
 
     // Also record as an event
     await recordEvent(sessionId, 'response_recorded', 'responses', {

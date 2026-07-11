@@ -15,6 +15,7 @@ export async function POST(request: NextRequest) {
     // Record the whatsapp click directly to the session
     await recordWhatsappClick(sessionId)
 
+
     console.log('[WhatsApp API] Recorded WhatsApp click for session:', sessionId)
 
     return NextResponse.json({ success: true })

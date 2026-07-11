@@ -187,6 +187,11 @@ export default function Page() {
 
     const sessionId = analyticsTracker.getSessionId()
 
+    // Gather inputs for response_entries
+    const enteredDate = sessionStorage.getItem('enteredDate')
+    const nameInput = name
+
+    // whatsappClicked is true only if user clicks WhatsApp later; default false here
     fetch('/api/record-response', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -194,8 +199,13 @@ export default function Page() {
         sessionId,
         question: 'Would you like to explore this connection?',
         answer: choice,
+        nameInput,
+        enteredDate,
+        selection: choice,
+        whatsappClicked: false,
       }),
     }).catch((err) => console.error('[Story] Error recording response:', err))
+
 
     fetch('/api/complete-story', {
       method: 'POST',

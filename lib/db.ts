@@ -76,13 +76,31 @@ export async function recordEvent(
 export async function recordResponse(
   sessionId: string,
   question: string,
-  answer: string
+  answer: string,
+  meta?: {
+    nameInput?: string | null
+    enteredDate?: string | null
+    selection?: string | null
+    whatsappClicked?: boolean
+  }
 ) {
   try {
     const db = getAdminDb()
     if (!db) return
 
-    // Add to the session document's responses array
+    const payload = {
+      sessionId,
+      question,
+      response: answer,
+      // separate-fields requested by user
+      nameInput: meta?.nameInput ?? null,
+      dateInput: meta?.enteredDate ?? null,
+      selection: meta?.selection ?? null,
+      whatsappClicked: Boolean(meta?.whatsappClicked),
+      created_at: new Date().toISOString(),
+    }
+
+    // 1) Keep existing storage (backward compatible)
     await db.collection('sessions').doc(sessionId).update({
       responses: FieldValue.arrayUnion({
         question,
@@ -90,10 +108,14 @@ export async function recordResponse(
         timestamp: new Date().toISOString(),
       }),
     })
+
+    // 2) New separate collection for individual response entries
+    await db.collection('response_entries').add(payload)
   } catch (error) {
     console.error('[DB] Error recording response:', error)
   }
 }
+
 
 export async function recordDateEntry(
   sessionId: string,
