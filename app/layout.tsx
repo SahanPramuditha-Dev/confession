@@ -1,11 +1,36 @@
 import { Analytics } from '@vercel/analytics/next'
+import { Cormorant_Garamond, Inter } from 'next/font/google'
 import type { Metadata, Viewport } from 'next'
+import { SITE_DESCRIPTION, SITE_TITLE } from '@/lib/constants'
 import './globals.css'
 
+const cormorant = Cormorant_Garamond({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600'],
+  variable: '--font-serif',
+  display: 'swap',
+})
+
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-sans',
+  display: 'swap',
+})
+
 export const metadata: Metadata = {
-  title: 'One Encounter',
-  description: 'A cinematic digital story about a single, unforgettable moment',
-  generator: 'v0.app',
+  title: SITE_TITLE,
+  description: SITE_DESCRIPTION,
+  openGraph: {
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+    type: 'website',
+    locale: 'en_GB',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+  },
   icons: {
     icon: [
       {
@@ -27,13 +52,9 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   colorScheme: 'dark',
-  themeColor: [
-    { media: '(prefers-color-scheme: dark)', color: '#070B18' },
-  ],
+  themeColor: [{ media: '(prefers-color-scheme: dark)', color: '#070B18' }],
   width: 'device-width',
   initialScale: 1,
-  maximumScale: 1,
-  userScalable: false,
 }
 
 export default function RootLayout({
@@ -42,8 +63,8 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className="bg-[#070B18]">
-      <body className="antialiased bg-[#070B18] text-white">
+    <html lang="en" className={`bg-[#070B18] ${cormorant.variable} ${inter.variable}`}>
+      <body className="font-sans antialiased bg-[#070B18] text-white">
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>

@@ -19,8 +19,8 @@ export function EndingSequence({ name, onComplete }: EndingSequenceProps) {
   }
 
   return (
-    <div className="fixed inset-0 bg-[#070B18] flex items-center justify-center">
-      {/* Star Field Background */}
+    <div className="fixed inset-0 bg-gradient-to-br from-[#2a0414] to-[#1a0009] flex items-center justify-center">
+      {/* Soft Particles Background */}
       <div className="absolute inset-0">
         {[...Array(50)].map((_, i) => (
           <motion.div
@@ -32,7 +32,7 @@ export function EndingSequence({ name, onComplete }: EndingSequenceProps) {
               duration: 2,
               repeat: phase === 'stars' ? Infinity : 0,
             }}
-            className="absolute w-1 h-1 bg-white rounded-full"
+            className="absolute w-1 h-1 bg-[#FFB7B2] rounded-full"
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
@@ -48,9 +48,9 @@ export function EndingSequence({ name, onComplete }: EndingSequenceProps) {
           animate={{ x: 1000, y: 1000, opacity: [0, 1, 0] }}
           transition={{ duration: 3, ease: 'easeIn' }}
           onAnimationComplete={() => handlePhaseComplete('zoom')}
-          className="absolute w-1 h-1 bg-[#FFD166] rounded-full blur-sm shadow-lg"
+          className="absolute w-1 h-1 bg-[#FFE5B4] rounded-full blur-sm shadow-lg"
           style={{
-            boxShadow: '0 0 20px rgba(255, 209, 102, 0.8), 0 0 40px rgba(255, 77, 109, 0.4)',
+            boxShadow: '0 0 20px rgba(255, 229, 180, 0.8), 0 0 40px rgba(255, 183, 178, 0.4)',
           }}
         />
       )}
@@ -62,7 +62,7 @@ export function EndingSequence({ name, onComplete }: EndingSequenceProps) {
           animate={{ scale: 1.5 }}
           transition={{ duration: 2, ease: 'easeOut' }}
           onAnimationComplete={() => handlePhaseComplete('message')}
-          className="absolute inset-0 bg-gradient-to-b from-[#FF4D6D] via-transparent to-[#9D4EDD]"
+          className="absolute inset-0 bg-gradient-to-b from-[#FFB7B2]/20 via-transparent to-[#4a0e26]/50"
         />
       )}
 
@@ -80,10 +80,10 @@ export function EndingSequence({ name, onComplete }: EndingSequenceProps) {
             transition={{ duration: 2, repeat: Infinity }}
             className="mb-8"
           >
-            <div className="text-6xl font-bold bg-gradient-to-r from-[#FF4D6D] to-[#FFD166] bg-clip-text text-transparent mb-4">
+            <div className="text-6xl font-bold bg-gradient-to-r from-[#FFB7B2] to-[#E2D1F9] bg-clip-text text-transparent mb-4">
               Thank You
             </div>
-            <p className="text-2xl text-[rgba(255,255,255,0.8)]">
+            <p className="text-2xl text-white/90">
               {name}
             </p>
           </motion.div>
@@ -92,7 +92,7 @@ export function EndingSequence({ name, onComplete }: EndingSequenceProps) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1 }}
-            className="text-lg text-[rgba(255,255,255,0.6)] max-w-md"
+            className="text-lg text-white/60 max-w-md"
           >
             For being part of my story
           </motion.p>
@@ -117,7 +117,7 @@ export function EndingSequence({ name, onComplete }: EndingSequenceProps) {
           animate={{ opacity: 1 }}
           transition={{ delay: 3, duration: 2 }}
           onAnimationComplete={onComplete}
-          className="absolute inset-0 bg-black"
+          className="absolute inset-0 bg-black/80 backdrop-blur-md"
         />
       )}
 
@@ -128,7 +128,7 @@ export function EndingSequence({ name, onComplete }: EndingSequenceProps) {
           animate={{ opacity: 1 }}
           transition={{ delay: 5 }}
           onClick={onComplete}
-          className="relative z-20 px-8 py-4 bg-gradient-to-r from-[#FF4D6D] to-[#9D4EDD] rounded-full text-white font-bold hover:shadow-xl transition-all"
+          className="relative z-20 px-8 py-4 bg-gradient-to-r from-[#FF758C] to-[#FF7EB3] rounded-full text-white font-bold hover:shadow-xl transition-all"
         >
           Replay Story
         </motion.button>

@@ -1,6 +1,14 @@
 // Personalization Configuration
-// The date when you first met
-export const FIRST_MEETING_DATE = new Date('2026-07-05') // July 5, 2026
+export const FIRST_MEETING_DATE = new Date('2026-07-05')
+
+export const WHATSAPP_NUMBER = '94764158980'
+export const WHATSAPP_MESSAGE = encodeURIComponent(
+  'Hi! I read your little website and it made me smile 😊'
+)
+
+export const SITE_TITLE = 'One Encounter'
+export const SITE_DESCRIPTION =
+  'A quiet, cinematic story about a single moment that stayed with someone.'
 
 // Feature Flags
 export const ENABLE_EASTER_EGGS = true
@@ -20,41 +28,45 @@ export const CONSTELLATION_MEANINGS: Record<number, string> = {
   7: 'A moment frozen in time',
 }
 
-// Message Templates
 export const MESSAGES = {
-  loading: 'Connecting to a memory...',
+  loading: 'Some stories begin with years.',
+  loadingSub: 'Some begin with a single moment.',
   hero: 'One Encounter',
+  heroSub: 'Sometimes one meeting is enough to make someone unforgettable.',
+  namePrompt: 'This story is written for one person.',
+  namePlaceholder: 'Your first name…',
+  dateHint: 'When did we first meet? (YYYYMMDD)',
   chapter1:
-    'It started with a single moment. Not in the grand, sweeping way that stories are told, but in the quiet, profound way that changes everything.',
-  chapter2:
-    'Each memory is a star in our sky. Click them to discover what they mean to me.',
-  envelope:
-    "I wanted to tell you something. Something that I've been carrying since that day we met.",
-  finalReveal: (name: string) =>
-    `${name}, you changed my life in a way I never expected. And I&apos;m grateful for every moment we&apos;ve shared.`,
-  yesResponse: (name: string) =>
-    `${name}, I was hoping you&apos;d say yes. The thought of getting to know you better makes my heart race.`,
-  maybeResponse: (name: string) =>
-    `${name}, I understand. There&apos;s no rush. But I want you to know that the possibility of you and me matters to me.`,
-  noResponse: (name: string) =>
-    `${name}, I respect that. Thank you for being honest. You&apos;ll always be a beautiful memory for me.`,
+    "We've only crossed paths once. I don't know much about you. You probably don't know me either.",
+  chapter2: 'Each memory is a little star. Tap them to see what they mean to me.',
+  chapter3:
+    'But I needed to tell you. What I feel is real. What I see in you is real.',
+  envelope: 'I wanted to tell you something I have been carrying since that day.',
+  finalReveal: (name: string) => `${name}, it's you.`,
+  memoryIntro: (days: number) =>
+    `${days} days have passed since that moment — and I still think about it.`,
+  responsePrompt: "Only if you're comfortable…",
+  yesResponse: 'Thank you. That truly made my day.',
+  thanksResponse: 'I appreciate you taking the time to read this.',
+  timeResponse: 'Take all the time you need. Thank you for reading.',
 }
 
-// Timeline Events
 export const TIMELINE_EVENTS = [
   {
     title: 'First Encounter',
     description: 'The moment everything changed',
-    color: '#FF4D6D',
+    color: '#FFB7B2',
   },
   {
     title: 'Getting Closer',
     description: 'When I realized how special you are',
-    color: '#9D4EDD',
+    color: '#E2D1F9',
   },
   {
     title: 'A Turning Point',
     description: 'The day I decided to reach out',
-    color: '#FFD166',
+    color: '#FFE5B4',
   },
 ]
+
+export const TRANSITION_MS = 600

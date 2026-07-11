@@ -9,8 +9,10 @@ interface InteractiveStarProps {
   y: number
   size: number
   message: string
-  depth: number
+  title: string
+  depth: 'far' | 'mid' | 'close'
   isCollected: boolean
+  isActive?: boolean
   onCollect: (id: string) => void
 }
 
@@ -20,8 +22,10 @@ export function InteractiveStar({
   y,
   size,
   message,
+  title,
   depth,
   isCollected,
+  isActive = false,
   onCollect,
 }: InteractiveStarProps) {
   const [isHovered, setIsHovered] = useState(false)
@@ -39,8 +43,8 @@ export function InteractiveStar({
     <motion.div
       initial={{ opacity: 0, scale: 0 }}
       animate={{ opacity: isCollected ? 1 : baseOpacity, scale }}
-      className="absolute cursor-pointer"
-      style={{ left: `${x}%`, top: `${y}%` }}
+      className="absolute cursor-pointer z-10"
+      style={{ left: `${x}%`, top: `${y}%`, transform: 'translate(-50%, -50%)' }}
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
     >
@@ -48,8 +52,8 @@ export function InteractiveStar({
       <motion.div
         animate={{
           boxShadow: isHovered || isCollected
-            ? `0 0 30px rgba(255, 77, 109, 0.8), 0 0 60px rgba(157, 78, 221, 0.4)`
-            : `0 0 15px rgba(255, 77, 109, 0.3), 0 0 30px rgba(157, 78, 221, 0.1)`,
+            ? `0 0 40px rgba(255, 117, 140, 0.9), 0 0 80px rgba(255, 126, 179, 0.5)`
+            : `0 0 20px rgba(255, 117, 140, 0.4), 0 0 40px rgba(255, 126, 179, 0.2)`,
         }}
         className="relative"
       >
@@ -63,7 +67,7 @@ export function InteractiveStar({
           onClick={handleClick}
           className={`w-${size} h-${size} rounded-full transition-all ${
             isCollected
-              ? 'bg-gradient-to-r from-[#FF4D6D] to-[#9D4EDD]'
+              ? 'bg-gradient-to-r from-[#FF758C] to-[#FF7EB3]'
               : 'bg-white'
           }`}
           style={{
@@ -85,15 +89,17 @@ export function InteractiveStar({
         </motion.div>
       </motion.div>
 
-      {/* Message card on click */}
-      {isHovered && !isCollected && (
+      {/* Message card on click, hover, or when active during auto-connect */}
+      {(isHovered || isActive) && (
         <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: -50 }}
-          exit={{ opacity: 0, y: -10 }}
-          className="absolute left-1/2 transform -translate-x-1/2 whitespace-nowrap bg-white/10 backdrop-blur-lg border border-white/20 rounded-lg px-3 py-2 text-sm text-white pointer-events-none"
+          initial={{ opacity: 0, y: 15, scale: 0.95 }}
+          animate={{ opacity: 1, y: -100, scale: 1 }}
+          exit={{ opacity: 0, y: 15, scale: 0.95 }}
+          transition={{ duration: 1.2, ease: "easeInOut" }}
+          className="absolute left-1/2 transform -translate-x-1/2 w-72 h-36 bg-white/10 backdrop-blur-md border border-white/30 rounded-2xl p-5 text-center shadow-2xl pointer-events-none z-50 flex flex-col items-center justify-center"
         >
-          {message}
+          <h3 className="text-xl font-serif text-white mb-2 font-light">{title}</h3>
+          <p className="text-sm text-white/90 leading-relaxed font-light">{message}</p>
         </motion.div>
       )}
 

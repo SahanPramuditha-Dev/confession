@@ -17,26 +17,35 @@ function serializeDoc(id: string, data: DocumentData) {
 
 export async function createVisitorSession(
   deviceInfo: Record<string, unknown>,
+  sessionId?: string,
   referrer?: string
 ) {
-  const sessionId = `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
+  const id =
+    sessionId || `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
   try {
     const db = getAdminDb()
-    if (!db) return sessionId
+    if (!db) return id
 
-    await db.collection('sessions').doc(sessionId).set({
+    await db.collection('sessions').doc(id).set({
       visitor_ip: deviceInfo?.ip || 'unknown',
       user_agent: deviceInfo?.userAgent || 'unknown',
       referrer: referrer || null,
       completed: false,
       user_name: null,
+      final_response: null,
+      entered_date: null,
+      date_is_correct: null,
+      whatsapp_clicked: false,
+      whatsapp_clicked_at: null,
+      responses: [],
+      events: [],
       created_at: FieldValue.serverTimestamp(),
     })
 
-    return sessionId
+    return id
   } catch (error) {
     console.error('[DB] Error creating session:', error)
-    return sessionId
+    return id
   }
 }
 
@@ -50,12 +59,14 @@ export async function recordEvent(
     const db = getAdminDb()
     if (!db) return
 
-    await db.collection('analytics_events').add({
-      session_id: sessionId,
-      event_type: eventType,
-      section: section || null,
-      data: value || null,
-      created_at: FieldValue.serverTimestamp(),
+    // Add to the session document's events array
+    await db.collection('sessions').doc(sessionId).update({
+      events: FieldValue.arrayUnion({
+        event_type: eventType,
+        section: section || null,
+        data: value || null,
+        timestamp: new Date().toISOString(),
+      }),
     })
   } catch (error) {
     console.error('[DB] Error recording event:', error)
@@ -71,11 +82,13 @@ export async function recordResponse(
     const db = getAdminDb()
     if (!db) return
 
-    await db.collection('responses').add({
-      session_id: sessionId,
-      question,
-      response: answer,
-      created_at: FieldValue.serverTimestamp(),
+    // Add to the session document's responses array
+    await db.collection('sessions').doc(sessionId).update({
+      responses: FieldValue.arrayUnion({
+        question,
+        response: answer,
+        timestamp: new Date().toISOString(),
+      }),
     })
   } catch (error) {
     console.error('[DB] Error recording response:', error)
@@ -91,11 +104,11 @@ export async function recordDateEntry(
     const db = getAdminDb()
     if (!db) return
 
-    await db.collection('date_entries').add({
-      session_id: sessionId,
+    // Store directly on the session document
+    await db.collection('sessions').doc(sessionId).update({
       entered_date: enteredDate,
-      is_correct: isCorrect,
-      created_at: FieldValue.serverTimestamp(),
+      date_is_correct: isCorrect,
+      date_entered_at: new Date().toISOString(),
     })
   } catch (error) {
     console.error('[DB] Error recording date entry:', error)
@@ -110,6 +123,7 @@ export async function markStoryCompleted(sessionId: string, finalResponse: strin
     await db.collection('sessions').doc(sessionId).update({
       completed: true,
       final_response: finalResponse,
+      completed_at: new Date().toISOString(),
     })
   } catch (error) {
     console.error('[DB] Error marking story complete:', error)
@@ -126,6 +140,20 @@ export async function updateSessionUser(sessionId: string, userName: string) {
     })
   } catch (error) {
     console.error('[DB] Error updating session user:', error)
+  }
+}
+
+export async function recordWhatsappClick(sessionId: string) {
+  try {
+    const db = getAdminDb()
+    if (!db) return
+
+    await db.collection('sessions').doc(sessionId).update({
+      whatsapp_clicked: true,
+      whatsapp_clicked_at: new Date().toISOString(),
+    })
+  } catch (error) {
+    console.error('[DB] Error recording whatsapp click:', error)
   }
 }
 
@@ -155,8 +183,10 @@ export async function getRecentResponses(limit: number = 20) {
     const db = getAdminDb()
     if (!db) return []
 
+    // Get sessions that have responses, ordered by creation
     const snapshot = await db
-      .collection('responses')
+      .collection('sessions')
+      .where('completed', '==', true)
       .orderBy('created_at', 'desc')
       .limit(limit)
       .get()
@@ -189,27 +219,15 @@ export async function getAllSessions(limit: number = 100) {
 export async function getSessionDetail(sessionId: string) {
   try {
     const db = getAdminDb()
-    if (!db) return { session: null, responses: [], dateEntries: [], events: [] }
+    if (!db) return null
 
-    const [sessionDoc, responsesSnap, dateEntriesSnap, eventsSnap] = await Promise.all([
-      db.collection('sessions').doc(sessionId).get(),
-      db.collection('responses').where('session_id', '==', sessionId).get(),
-      db.collection('date_entries').where('session_id', '==', sessionId).get(),
-      db
-        .collection('analytics_events')
-        .where('session_id', '==', sessionId)
-        .orderBy('created_at', 'asc')
-        .get(),
-    ])
+    const sessionDoc = await db.collection('sessions').doc(sessionId).get()
 
-    return {
-      session: sessionDoc.exists ? serializeDoc(sessionDoc.id, sessionDoc.data()!) : null,
-      responses: responsesSnap.docs.map((doc) => serializeDoc(doc.id, doc.data())),
-      dateEntries: dateEntriesSnap.docs.map((doc) => serializeDoc(doc.id, doc.data())),
-      events: eventsSnap.docs.map((doc) => serializeDoc(doc.id, doc.data())),
-    }
+    if (!sessionDoc.exists) return null
+
+    return serializeDoc(sessionDoc.id, sessionDoc.data()!)
   } catch (error) {
     console.error('[DB] Error getting session detail:', error)
-    return { session: null, responses: [], dateEntries: [], events: [] }
+    return null
   }
 }

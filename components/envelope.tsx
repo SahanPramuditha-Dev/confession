@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { analyticsTracker } from '@/lib/analytics'
 
 interface EnvelopeProps {
@@ -9,26 +9,59 @@ interface EnvelopeProps {
   name?: string
 }
 
+const LETTER_LINES = [
+  "I know we've only met once.",
+  "Maybe this is unexpected. Maybe it's too soon.",
+  "But I'd regret never telling you that meeting you left a lasting impression on me.",
+  "I'd genuinely like the chance to know you better.",
+] as const
+
+function FloatingPetals() {
+  return (
+    <>
+      {[...Array(5)].map((_, i) => (
+        <motion.div
+          key={i}
+          className="absolute pointer-events-none select-none text-[#D4849A]/30"
+          style={{
+            left: `${8 + i * 18}%`,
+            top: `${12 + (i % 3) * 28}%`,
+            fontSize: `${10 + (i % 3) * 4}px`,
+          }}
+          animate={{
+            y: [-6, 10, -6],
+            x: [-4, 4, -4],
+            rotate: [-8, 8, -8],
+            opacity: [0.2, 0.45, 0.2],
+          }}
+          transition={{
+            duration: 5 + i * 0.6,
+            repeat: Infinity,
+            ease: 'easeInOut',
+            delay: i * 0.5,
+          }}
+        >
+          ✿
+        </motion.div>
+      ))}
+    </>
+  )
+}
+
 export function Envelope({ onOpen, name }: EnvelopeProps) {
   const [isOpen, setIsOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
-  useEffect(() => {
-    analyticsTracker.trackEvent('letter_opened', 'envelope')
-  }, [])
-
   const handleOpen = () => {
+    if (isLoading || isOpen) return
+
     setIsLoading(true)
     analyticsTracker.trackEvent('letter_opened', 'envelope', { opened: true })
-    
-    // Show loading state for 2-3 seconds while "preparing" the letter
+
     setTimeout(() => {
       setIsLoading(false)
       setIsOpen(true)
-    }, 3000)
-    
-    // Call onOpen after animation completes (8 seconds total)
-    setTimeout(() => onOpen?.(), 8000)
+    }, 1800)
   }
 
   // Particle effect for the wax seal
@@ -47,7 +80,7 @@ export function Envelope({ onOpen, name }: EnvelopeProps) {
           repeat: Infinity,
         }}
       >
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-[#FF4D6D]/10 to-[#9D4EDD]/10 rounded-full blur-3xl" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-[#FFB7B2]/30 to-[#E2D1F9]/30 rounded-full blur-3xl" />
       </motion.div>
 
       <div className="relative z-10">
@@ -56,17 +89,18 @@ export function Envelope({ onOpen, name }: EnvelopeProps) {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
-            className="fixed inset-0 flex flex-col items-center justify-center"
+            className="fixed inset-0 flex flex-col items-center justify-center z-40"
           >
+            <div className="absolute inset-0 bg-[#1a0810]/60 backdrop-blur-sm" />
             <motion.div
               animate={{ opacity: [0.6, 1, 0.6] }}
               transition={{ duration: 2, repeat: Infinity }}
-              className="text-center space-y-6"
+              className="relative z-10 text-center space-y-6"
             >
               <motion.div
                 animate={{ rotate: 360 }}
                 transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
-                className="w-16 h-16 mx-auto border-2 border-[#FF4D6D]/30 border-t-[#FF4D6D] rounded-full"
+                className="w-16 h-16 mx-auto border-2 border-[#FFB7B2]/50 border-t-[#FFB7B2] rounded-full"
               />
               <div>
                 <p className="text-2xl font-light text-white mb-2">
@@ -75,7 +109,7 @@ export function Envelope({ onOpen, name }: EnvelopeProps) {
                 <motion.p
                   animate={{ opacity: [0.5, 1] }}
                   transition={{ duration: 1.5, repeat: Infinity }}
-                  className="text-sm text-gray-400"
+                  className="text-sm text-white/60"
                 >
                   ✨
                 </motion.p>
@@ -84,12 +118,13 @@ export function Envelope({ onOpen, name }: EnvelopeProps) {
           </motion.div>
         )}
 
-        {!isOpen && !isLoading ? (
+        {!isOpen && (
           <motion.div
             className="relative cursor-pointer"
             onClick={handleOpen}
-            whileHover={{ scale: 1.08 }}
-            whileTap={{ scale: 0.95 }}
+            whileHover={isLoading ? {} : { scale: 1.08 }}
+            whileTap={isLoading ? {} : { scale: 0.95 }}
+            style={{ pointerEvents: isLoading ? 'none' : 'auto' }}
           >
             {/* Envelope floating animation */}
             <motion.div
@@ -108,9 +143,9 @@ export function Envelope({ onOpen, name }: EnvelopeProps) {
                 className="relative w-80 h-48 rounded-2xl overflow-hidden shadow-2xl"
                 animate={{
                   boxShadow: [
-                    '0 20px 60px rgba(255, 77, 109, 0.2), 0 0 40px rgba(157, 78, 221, 0.15)',
-                    '0 30px 80px rgba(255, 77, 109, 0.3), 0 0 60px rgba(157, 78, 221, 0.25)',
-                    '0 20px 60px rgba(255, 77, 109, 0.2), 0 0 40px rgba(157, 78, 221, 0.15)',
+                    '0 20px 60px rgba(255, 183, 178, 0.2), 0 0 40px rgba(226, 209, 249, 0.15)',
+                    '0 30px 80px rgba(255, 183, 178, 0.3), 0 0 60px rgba(226, 209, 249, 0.25)',
+                    '0 20px 60px rgba(255, 183, 178, 0.2), 0 0 40px rgba(226, 209, 249, 0.15)',
                   ],
                 }}
                 transition={{
@@ -126,7 +161,7 @@ export function Envelope({ onOpen, name }: EnvelopeProps) {
 
                 {/* Decorative edge accent */}
                 <motion.div
-                  className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#FF4D6D] to-transparent opacity-0"
+                  className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#FFB7B2] to-transparent opacity-0"
                   animate={{
                     opacity: [0, 1, 0],
                   }}
@@ -154,12 +189,12 @@ export function Envelope({ onOpen, name }: EnvelopeProps) {
 
                 {/* Wax seal - glowing effect */}
                 <motion.div
-                  className="absolute top-1/3 left-1/2 -translate-x-1/2 w-20 h-20 rounded-full bg-gradient-to-br from-[#FF4D6D] to-[#C20E4E] shadow-lg"
+                  className="absolute top-1/3 left-1/2 -translate-x-1/2 w-20 h-20 rounded-full bg-gradient-to-br from-[#FFB7B2] to-[#ff9e99] shadow-lg"
                   animate={{
                     boxShadow: [
-                      '0 0 20px rgba(255, 77, 109, 0.6), inset 0 0 10px rgba(255, 255, 255, 0.2)',
-                      '0 0 40px rgba(255, 77, 109, 0.8), inset 0 0 15px rgba(255, 255, 255, 0.3)',
-                      '0 0 20px rgba(255, 77, 109, 0.6), inset 0 0 10px rgba(255, 255, 255, 0.2)',
+                      '0 0 20px rgba(255, 183, 178, 0.6), inset 0 0 10px rgba(255, 255, 255, 0.2)',
+                      '0 0 40px rgba(255, 183, 178, 0.8), inset 0 0 15px rgba(255, 255, 255, 0.3)',
+                      '0 0 20px rgba(255, 183, 178, 0.6), inset 0 0 10px rgba(255, 255, 255, 0.2)',
                     ],
                     scale: [1, 1.1, 1],
                   }}
@@ -183,17 +218,17 @@ export function Envelope({ onOpen, name }: EnvelopeProps) {
                   {/* Seal center */}
                   <div className="absolute inset-0 flex items-center justify-center">
                     <motion.span
-                      className="text-2xl"
+                      className="text-2xl text-[#8B2E42] drop-shadow-[0_0_5px_rgba(139,46,66,0.6)]"
                       animate={{
                         rotate: [0, 360],
                       }}
                       transition={{
-                        duration: 4,
+                        duration: 8,
                         repeat: Infinity,
                         ease: 'linear',
                       }}
                     >
-                      ♥
+                      ❤️
                     </motion.span>
                   </div>
                 </motion.div>
@@ -202,7 +237,7 @@ export function Envelope({ onOpen, name }: EnvelopeProps) {
                 {particles.map((i) => (
                   <motion.div
                     key={i}
-                    className="absolute w-1.5 h-1.5 rounded-full bg-[#FF4D6D]"
+                    className="absolute w-1.5 h-1.5 rounded-full bg-[#FFB7B2]"
                     style={{
                       left: '50%',
                       top: '33%',
@@ -229,7 +264,7 @@ export function Envelope({ onOpen, name }: EnvelopeProps) {
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.5 }}
                   >
-                    <p className="text-slate-500 font-light text-sm">
+                    <p className="text-white/60 font-light text-sm">
                       To: {name}
                     </p>
                   </motion.div>
@@ -246,7 +281,7 @@ export function Envelope({ onOpen, name }: EnvelopeProps) {
                     repeat: Infinity,
                   }}
                 >
-                  <p className="text-slate-600 font-light text-sm tracking-wide">
+                  <p className="text-white/80 font-light text-sm tracking-wide">
                     Click to open
                   </p>
                 </motion.div>
@@ -277,105 +312,154 @@ export function Envelope({ onOpen, name }: EnvelopeProps) {
               </motion.div>
             </motion.div>
           </motion.div>
-        ) : (
-          /* Opened envelope - letter content */
+        )}
+
+        {isOpen && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8 }}
-            className="relative"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6 }}
+            className="fixed inset-0 flex items-center justify-center z-50 px-4"
           >
-            {/* Letter sheet opening animation */}
+            {/* Soft backdrop — hides page particles and reduces eye strain */}
+            <div className="absolute inset-0 bg-[#1a0810]/75 backdrop-blur-md" />
+
+            {/* Warm ambient glow */}
             <motion.div
-              initial={{ rotateX: 90 }}
-              animate={{ rotateX: 0 }}
-              transition={{
-                duration: 1.2,
-                ease: 'easeOut',
-              }}
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full pointer-events-none"
               style={{
-                transformStyle: 'preserve-3d',
+                background: 'radial-gradient(circle, rgba(255,183,178,0.12) 0%, transparent 70%)',
               }}
+              animate={{ scale: [1, 1.08, 1], opacity: [0.5, 0.8, 0.5] }}
+              transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+            />
+
+            <motion.div
+              initial={{ y: 40, opacity: 0, scale: 0.92 }}
+              animate={{ y: 0, opacity: 1, scale: 1 }}
+              transition={{ duration: 1.2, type: 'spring', bounce: 0.25 }}
+              className="relative w-[400px] max-w-[92vw]"
             >
+              {/* Gentle floating motion */}
               <motion.div
-                initial={{ y: 40, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ duration: 1, delay: 0.8 }}
-                className="relative w-96 bg-gradient-to-br from-amber-50/95 via-white/98 to-amber-50/95 rounded-xl p-10 shadow-2xl border border-amber-100/50 backdrop-blur-sm"
+                animate={{ y: [0, -6, 0] }}
+                transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
               >
-                {/* Aged paper texture */}
-                <div className="absolute inset-0 opacity-[0.03] bg-[radial-gradient(circle_at_20%_50%,#000,transparent_50%)]" />
+                <div className="relative overflow-hidden rounded-lg shadow-[0_20px_50px_rgba(0,0,0,0.25),0_0_30px_rgba(255,183,178,0.15)]">
+                  {/* Parchment base */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-[#FBF5EB] via-[#F8F0E3] to-[#F3E6D4]" />
 
-                {/* Corner decorations */}
-                <motion.div
-                  className="absolute top-2 left-2 w-3 h-3 border-t-2 border-l-2 border-amber-200 opacity-50"
-                  animate={{ opacity: [0.3, 0.6, 0.3] }}
-                  transition={{ duration: 3, repeat: Infinity }}
-                />
-                <motion.div
-                  className="absolute bottom-2 right-2 w-3 h-3 border-b-2 border-r-2 border-amber-200 opacity-50"
-                  animate={{ opacity: [0.3, 0.6, 0.3] }}
-                  transition={{ duration: 3, repeat: Infinity, delay: 0.5 }}
-                />
+                  {/* Paper texture */}
+                  <div className="absolute inset-0 opacity-[0.06] bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPgo8cmVjdCB3aWR0aD0iNCIgaGVpZ2h0PSI0IiBmaWxsPSIjOEI2RjQ3Ii8+Cjwvc3ZnPg==')]" />
 
-                {/* Letter content */}
-                <div className="relative z-10 space-y-4">
-                  <motion.p
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 1.2, duration: 0.8 }}
-                    className="text-amber-900 font-light text-sm leading-relaxed"
-                  >
-                    {name ? `Dear ${name},` : 'Dear you,'}
-                  </motion.p>
+                  {/* Soft inner vignette */}
+                  <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,rgba(139,90,60,0.04)_100%)]" />
 
-                  <motion.p
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 1.5, duration: 0.8 }}
-                    className="text-amber-950/80 font-light text-lg leading-relaxed"
-                  >
-                    I know we&apos;ve only met once.
-                  </motion.p>
+                  {/* Rose-tinted edge glow */}
+                  <div className="absolute inset-0 border border-[#E8D5C0]/80 rounded-lg" />
+                  <div className="absolute inset-[3px] border border-[#D4A574]/20 rounded-md pointer-events-none" />
 
-                  <motion.p
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 1.8, duration: 0.8 }}
-                    className="text-amber-950/70 font-light text-lg leading-relaxed"
-                  >
-                    Maybe this is unexpected. Maybe it&apos;s too soon.
-                  </motion.p>
+                  <FloatingPetals />
 
-                  <motion.p
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 2.1, duration: 0.8 }}
-                    className="text-amber-950/70 font-light text-lg leading-relaxed"
-                  >
-                    But I&apos;d regret never telling you that meeting you left a lasting impression on me.
-                  </motion.p>
+                  <div className="relative z-10 px-10 py-12 md:px-12 md:py-14">
+                    {/* Wax seal accent */}
+                    <motion.div
+                      className="absolute -top-3 left-1/2 -translate-x-1/2 w-10 h-10 rounded-full bg-gradient-to-br from-[#E8A0A8] to-[#D4849A] shadow-md flex items-center justify-center"
+                      initial={{ scale: 0, rotate: -180 }}
+                      animate={{ scale: 1, rotate: 0 }}
+                      transition={{ delay: 0.4, type: 'spring', bounce: 0.5 }}
+                    >
+                      <motion.span
+                        className="text-sm"
+                        animate={{ scale: [1, 1.15, 1] }}
+                        transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
+                      >
+                        ♥
+                      </motion.span>
+                    </motion.div>
 
-                  <motion.p
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 2.4, duration: 0.8 }}
-                    className="text-amber-900 font-light text-lg leading-relaxed italic pt-2"
-                  >
-                    I&apos;d genuinely like the chance to know you better.
-                  </motion.p>
+                    {/* Corner flourishes */}
+                    <motion.div
+                      className="absolute top-4 left-4 text-[#D4A574]/50 text-lg"
+                      animate={{ opacity: [0.3, 0.6, 0.3] }}
+                      transition={{ duration: 4, repeat: Infinity }}
+                    >
+                      ❧
+                    </motion.div>
+                    <motion.div
+                      className="absolute bottom-4 right-4 text-[#D4A574]/50 text-lg rotate-180"
+                      animate={{ opacity: [0.3, 0.6, 0.3] }}
+                      transition={{ duration: 4, repeat: Infinity, delay: 1 }}
+                    >
+                      ❧
+                    </motion.div>
+
+                    <div className="space-y-5">
+                      <motion.p
+                        initial={{ opacity: 0, y: 12 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.6, duration: 0.9 }}
+                        className="text-[#4A3728] font-serif text-2xl font-medium tracking-wide"
+                      >
+                        {name ? `Dear ${name},` : 'Dear you,'}
+                      </motion.p>
+
+                      <motion.div
+                        initial={{ width: 0, opacity: 0 }}
+                        animate={{ width: '48px', opacity: 1 }}
+                        transition={{ delay: 0.9, duration: 0.8 }}
+                        className="h-px bg-gradient-to-r from-[#D4849A]/70 to-transparent"
+                      />
+
+                      {LETTER_LINES.map((line, i) => (
+                        <motion.p
+                          key={line}
+                          initial={{ opacity: 0, y: 14 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: 1.1 + i * 0.45, duration: 0.9, ease: 'easeOut' }}
+                          className={
+                            i === LETTER_LINES.length - 1
+                              ? 'text-[#7A3E4A] font-serif text-xl leading-relaxed italic pt-2 font-medium'
+                              : 'text-[#5C4636] font-serif text-[17px] leading-[1.85]'
+                          }
+                        >
+                          {line}
+                        </motion.p>
+                      ))}
+                    </div>
+
+                    <motion.div
+                      className="mt-8 h-px bg-gradient-to-r from-transparent via-[#D4A574]/40 to-transparent"
+                      initial={{ opacity: 0, scaleX: 0 }}
+                      animate={{ opacity: 1, scaleX: 1 }}
+                      transition={{ delay: 3.2, duration: 0.8 }}
+                    />
+
+                    <motion.p
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: 3.5, duration: 0.8 }}
+                      className="mt-5 text-center text-[#9A7B6A] font-serif text-sm italic"
+                    >
+                      with all my honesty
+                    </motion.p>
+                  </div>
                 </div>
-
-                {/* Decorative separator */}
-                <motion.div
-                  className="mt-6 h-px bg-gradient-to-r from-transparent via-amber-200 to-transparent"
-                  initial={{ opacity: 0, scaleX: 0 }}
-                  animate={{ opacity: 1, scaleX: 1 }}
-                  transition={{ delay: 2.7, duration: 0.8 }}
-                />
               </motion.div>
             </motion.div>
           </motion.div>
+        )}
+
+        {isOpen && (
+          <motion.button
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 3.8, duration: 0.8 }}
+            onClick={() => onOpen?.()}
+            className="fixed bottom-8 px-8 py-3 bg-gradient-to-r from-[#FF758C] to-[#FF7EB3] rounded-full font-semibold text-white hover:shadow-xl transition-all z-[60]"
+          >
+            Continue →
+          </motion.button>
         )}
       </div>
     </div>

@@ -119,6 +119,54 @@ export class AudioSystem {
     }
     this.effectAudios.clear()
   }
+
+  startSoftAmbient(): { stop: () => void } {
+    if (!this.audioContext) {
+      return { stop: () => {} }
+    }
+
+    const ctx = this.audioContext
+    if (ctx.state === 'suspended') {
+      ctx.resume().catch(() => {})
+    }
+
+    const master = ctx.createGain()
+    master.gain.value = 0.04 * this.masterVolume
+    master.connect(ctx.destination)
+
+    const osc1 = ctx.createOscillator()
+    const osc2 = ctx.createOscillator()
+    const gain1 = ctx.createGain()
+    const gain2 = ctx.createGain()
+
+    osc1.type = 'sine'
+    osc2.type = 'sine'
+    osc1.frequency.value = 220
+    osc2.frequency.value = 329.63
+
+    gain1.gain.value = 0.5
+    gain2.gain.value = 0.35
+
+    osc1.connect(gain1)
+    osc2.connect(gain2)
+    gain1.connect(master)
+    gain2.connect(master)
+
+    osc1.start()
+    osc2.start()
+
+    return {
+      stop: () => {
+        try {
+          osc1.stop()
+          osc2.stop()
+          master.disconnect()
+        } catch {
+          /* already stopped */
+        }
+      },
+    }
+  }
 }
 
 export const audioSystem = new AudioSystem()

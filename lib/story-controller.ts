@@ -1,75 +1,69 @@
 export type StoryState = 'AUTO_PLAYING' | 'WAITING_FOR_INTERACTION' | 'COMPLETED' | 'PAUSED'
 
 export interface SectionConfig {
-  duration: number // ms, 0 = no auto-advance
+  duration: number
   state: StoryState
   requiresInteraction: boolean
-  postInteractionWait?: number // 20 second pause after user completes interaction
 }
 
 export const sectionConfigs: Record<string, SectionConfig> = {
   loading: {
-    duration: 5000, // Longer intro for cinematic feel
+    duration: 4500,
     state: 'AUTO_PLAYING',
     requiresInteraction: false,
   },
   hero: {
-    duration: 4500, // Slow, emotional hero reveal
-    state: 'AUTO_PLAYING',
-    requiresInteraction: false,
+    duration: 0,
+    state: 'WAITING_FOR_INTERACTION',
+    requiresInteraction: true,
   },
   name: {
-    duration: 20000, // 20 second pause for name entry completion
+    duration: 0,
     state: 'WAITING_FOR_INTERACTION',
     requiresInteraction: true,
-    postInteractionWait: 20000, // 20 second wait after submission
   },
   dateEntry: {
-    duration: 0, // WAIT for PIN entry
+    duration: 0,
     state: 'WAITING_FOR_INTERACTION',
     requiresInteraction: true,
-    postInteractionWait: 20000, // 20 second wait after submission
   },
   letter: {
-    duration: 0, // NO auto-advance - user reads the letter at their own pace
+    duration: 0,
     state: 'WAITING_FOR_INTERACTION',
     requiresInteraction: true,
   },
   chapter1: {
-    duration: 8000, // Slow narrative reveal
-    state: 'AUTO_PLAYING',
-    requiresInteraction: false,
-    postInteractionWait: 20000, // 20 second pause at end
+    duration: 0,
+    state: 'WAITING_FOR_INTERACTION',
+    requiresInteraction: true,
   },
   chapter2: {
-    duration: 7500, // Each chapter slightly faster (growing intensity)
-    state: 'AUTO_PLAYING',
-    requiresInteraction: false,
-    postInteractionWait: 20000, // 20 second pause at end
-  },
-  chapter3: {
-    duration: 7000, // Final chapter
-    state: 'AUTO_PLAYING',
-    requiresInteraction: false,
-    postInteractionWait: 20000, // 20 second pause at end
+    duration: 0,
+    state: 'WAITING_FOR_INTERACTION',
+    requiresInteraction: true,
   },
   constellation: {
-    duration: 0, // WAIT for star collection (interactive)
+    duration: 0,
+    state: 'WAITING_FOR_INTERACTION',
+    requiresInteraction: true,
+  },
+  chapter3: {
+    duration: 0,
     state: 'WAITING_FOR_INTERACTION',
     requiresInteraction: true,
   },
   envelope: {
-    duration: 0, // WAIT for letter open (interactive)
+    duration: 0,
     state: 'WAITING_FOR_INTERACTION',
     requiresInteraction: true,
   },
   reveal: {
-    duration: 8000, // Slow, emotional final reveal
-    state: 'AUTO_PLAYING',
-    requiresInteraction: false,
+    duration: 0,
+    state: 'WAITING_FOR_INTERACTION',
+    requiresInteraction: true,
   },
   memory: {
-    duration: 0, // WAIT for response (critical interaction)
+    duration: 0,
     state: 'WAITING_FOR_INTERACTION',
     requiresInteraction: true,
   },

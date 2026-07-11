@@ -27,9 +27,7 @@ export function AnimatedLetter({ name, onComplete }: AnimatedLetterProps) {
   }, [])
 
   const handleComplete = () => {
-    setTimeout(() => {
-      onComplete()
-    }, 2000)
+    onComplete()
   }
 
   return (
@@ -49,7 +47,7 @@ export function AnimatedLetter({ name, onComplete }: AnimatedLetterProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 3.5, duration: 0.8 }}
             onClick={handleComplete}
-            className="fixed bottom-8 px-8 py-3 bg-gradient-to-r from-[#FF4D6D] to-[#9D4EDD] rounded-full font-semibold text-white hover:shadow-xl transition-all"
+            className="fixed bottom-8 px-8 py-3 bg-gradient-to-r from-[#FF758C] to-[#FF7EB3] rounded-full font-semibold text-white hover:shadow-xl transition-all z-[60]"
           >
             Continue →
           </motion.button>
