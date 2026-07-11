@@ -2,9 +2,7 @@
 export const FIRST_MEETING_DATE = new Date('2026-07-05')
 
 export const WHATSAPP_NUMBER = '94764158980'
-export const WHATSAPP_MESSAGE = encodeURIComponent(
-  'Hi! I read your little website and it made me smile 😊'
-)
+export const WHATSAPP_MESSAGE = encodeURIComponent('Hii 😊')
 
 export const SITE_TITLE = 'One Encounter'
 export const SITE_DESCRIPTION =
