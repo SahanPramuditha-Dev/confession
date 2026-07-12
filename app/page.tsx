@@ -14,7 +14,6 @@ import { ParticleBurst } from '@/components/particle-burst'
 import { DateEntryPin } from '@/components/date-entry-pin'
 import { AnimatedLetter } from '@/components/animated-letter'
 import { EndingSequence } from '@/components/ending-sequence'
-import { ConstellationCollector } from '@/components/constellation-collector'
 import { MusicToggle } from '@/components/music-toggle'
 import { storyController, sectionConfigs } from '@/lib/story-controller'
 import { analyticsTracker } from '@/lib/analytics'
@@ -33,7 +32,6 @@ type Section =
   | 'letter'
   | 'chapter1'
   | 'chapter2'
-  | 'constellation'
   | 'chapter3'
   | 'envelope'
   | 'reveal'
@@ -440,18 +438,12 @@ export default function Page() {
               transition={{ delay: 0.4 }}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.96 }}
-              onClick={() => handleContinue('constellation')}
+              onClick={() => handleContinue('chapter3')}
               className="mt-12 px-8 py-4 bg-white/10 border border-white/20 rounded-full font-semibold text-white"
             >
-              Discover the stars →
+              Continue →
             </motion.button>
           </motion.section>
-        )}
-
-        {section === 'constellation' && (
-          <motion.div key="constellation" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-            <ConstellationCollector onComplete={() => handleContinue('chapter3')} />
-          </motion.div>
         )}
 
         {section === 'chapter3' && (
