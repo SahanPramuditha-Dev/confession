@@ -10,16 +10,16 @@ interface ConstellationCollectorProps {
 }
 
 const STARS_DATA = [
-  { id: '1', x: 50, y: 85, size: 12, title: 'Your Heart', message: 'Your beautiful heart is what I cherish most of all.', depth: 'close' },
-  { id: '2', x: 65, y: 70, size: 8, title: 'Your Warmth', message: 'Your presence is like a warm embrace I never want to leave.', depth: 'mid' },
-  { id: '3', x: 80, y: 50, size: 10, title: 'Your Spirit', message: 'Your fierce, beautiful spirit inspires me every single day.', depth: 'far' },
-  { id: '4', x: 85, y: 30, size: 9, title: 'Your Laugh', message: 'The sound of your laugh is my absolute favorite sound.', depth: 'mid' },
-  { id: '5', x: 70, y: 15, size: 11, title: 'Your Smile', message: 'Your smile is a light that brightens even my darkest days.', depth: 'close' },
-  { id: '6', x: 50, y: 30, size: 8, title: 'Your Gentleness', message: 'Your gentle nature brings peace to every room you enter.', depth: 'far' },
-  { id: '7', x: 30, y: 15, size: 10, title: 'Your Voice', message: 'Hearing your voice is the most comforting melody to my soul.', depth: 'close' },
-  { id: '8', x: 15, y: 30, size: 9, title: 'Your Beauty', message: 'Your beauty is effortless, radiating from the inside out.', depth: 'mid' },
-  { id: '9', x: 20, y: 50, size: 8, title: 'Your Hair', message: "The way your hair falls perfectly, even when you aren't trying.", depth: 'far' },
-  { id: '10', x: 35, y: 70, size: 11, title: 'Your Eyes', message: 'Your eyes hold the depth of an ocean I could get lost in forever.', depth: 'close' },
+  { id: '1', x: 50, y: 80, size: 12, title: 'Your Heart', message: 'Your beautiful heart is what I cherish most of all.', depth: 'close' },
+  { id: '2', x: 60, y: 67, size: 8, title: 'Your Warmth', message: 'Your presence is like a warm embrace I never want to leave.', depth: 'mid' },
+  { id: '3', x: 90, y: 41, size: 10, title: 'Your Spirit', message: 'Your fierce, beautiful spirit inspires me every single day.', depth: 'far' },
+  { id: '4', x: 90, y: 13, size: 9, title: 'Your Laugh', message: 'The sound of your laugh is my absolute favorite sound.', depth: 'mid' },
+  { id: '5', x: 60, y: 10, size: 11, title: 'Your Smile', message: 'Your smile is a light that brightens even my darkest days.', depth: 'close' },
+  { id: '6', x: 50, y: 24, size: 8, title: 'Your Gentleness', message: 'Your gentle nature brings peace to every room you enter.', depth: 'far' },
+  { id: '7', x: 40, y: 10, size: 10, title: 'Your Voice', message: 'Hearing your voice is the most comforting melody to my soul.', depth: 'close' },
+  { id: '8', x: 10, y: 13, size: 9, title: 'Your Beauty', message: 'Your beauty is effortless, radiating from the inside out.', depth: 'mid' },
+  { id: '9', x: 10, y: 41, size: 8, title: 'Your Hair', message: "The way your hair falls perfectly, even when you aren't trying.", depth: 'far' },
+  { id: '10', x: 40, y: 67, size: 11, title: 'Your Eyes', message: 'Your eyes hold the depth of an ocean I could get lost in forever.', depth: 'close' },
 ]
 
 const HEART_CENTER = { x: 50, y: 42 }
@@ -91,9 +91,9 @@ export function ConstellationCollector({ onComplete }: ConstellationCollectorPro
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: isFadingOut ? 0 : 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="absolute top-16 text-center"
+        className="absolute top-8 sm:top-16 text-center"
       >
-        <h2 className="font-serif text-3xl md:text-4xl font-light text-white mb-4">
+        <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-light text-white mb-4">
           Watch the stars align for you...
         </h2>
         <p className="text-lg text-white/60">
@@ -150,8 +150,8 @@ export function ConstellationCollector({ onComplete }: ConstellationCollectorPro
       </motion.div>
 
       {/* Progress indicator */}
-      <motion.div className="absolute bottom-20 left-1/2 transform -translate-x-1/2">
-        <div className="w-64 h-2 bg-white/20 rounded-full overflow-hidden">
+      <motion.div className="absolute bottom-12 sm:bottom-20 left-1/2 transform -translate-x-1/2">
+        <div className="w-48 sm:w-64 h-2 bg-white/20 rounded-full overflow-hidden">
           <motion.div
             initial={{ width: 0 }}
             animate={{ width: `${progressPercent}%` }}

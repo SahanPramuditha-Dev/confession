@@ -143,14 +143,14 @@ export function DateEntryPin({ onSubmit, name }: DateEntryPinProps) {
         </motion.p>
 
         <motion.div
-          className={`flex justify-center gap-2 mb-8 h-12 ${error && !submitted ? 'animate-pulse' : ''}`}
+          className={`flex justify-center gap-1.5 sm:gap-2 mb-8 h-12 ${error && !submitted ? 'animate-pulse' : ''}`}
           animate={error && !submitted ? { x: [-4, 4, -4, 0] } : {}}
           transition={{ duration: 0.4 }}
         >
           {[...Array(8)].map((_, i) => (
             <motion.div
               key={i}
-              className="w-10 h-12 md:w-12 md:h-12 rounded-xl border-2 border-[#E2D1F9] flex items-center justify-center text-white text-lg font-semibold"
+              className="w-8 h-10 sm:w-10 sm:h-12 md:w-12 md:h-12 rounded-xl border-2 border-[#E2D1F9] flex items-center justify-center text-white text-lg font-semibold"
               animate={{
                 backgroundColor:
                   i < pin.length ? 'rgba(226, 209, 249, 0.4)' : 'rgba(255, 255, 255, 0.5)',
@@ -181,14 +181,14 @@ export function DateEntryPin({ onSubmit, name }: DateEntryPinProps) {
               className="space-y-3 mb-6"
             >
               {buttons.map((row, rowIdx) => (
-                <div key={rowIdx} className="flex justify-center gap-3">
+                <div key={rowIdx} className="flex justify-center gap-2 sm:gap-3">
                   {row.map((digit) => (
                     <motion.button
                       key={digit}
                       onClick={() => handleDigit(digit)}
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.92 }}
-                      className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-gradient-to-br from-[#E2D1F9] to-[#d4bcf6] text-slate-800 font-semibold text-xl hover:shadow-lg hover:shadow-[#E2D1F9]/40 transition-all"
+                      className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full bg-gradient-to-br from-[#E2D1F9] to-[#d4bcf6] text-slate-800 font-semibold text-xl hover:shadow-lg hover:shadow-[#E2D1F9]/40 transition-all"
                     >
                       {digit}
                     </motion.button>
@@ -201,7 +201,7 @@ export function DateEntryPin({ onSubmit, name }: DateEntryPinProps) {
               onClick={handleDelete}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="px-6 py-2 rounded-full border border-white/40 text-white/60 hover:bg-white/10 transition-all"
+              className="px-6 py-3 min-h-[44px] rounded-full border border-white/40 text-white/60 hover:bg-white/10 transition-all"
             >
               ← Delete
             </motion.button>

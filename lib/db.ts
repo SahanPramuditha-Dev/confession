@@ -73,48 +73,89 @@ export async function recordEvent(
   }
 }
 
+export type UserResponseItem = {
+  question: string
+  response: string
+  timestamp: string
+}
+
 export async function recordResponse(
   sessionId: string,
   question: string,
   answer: string,
   meta?: {
-    nameInput?: string | null
+    userName?: string | null
     enteredDate?: string | null
+    correctedDate?: string | null
+    dateIsCorrect?: boolean | null
     selection?: string | null
     whatsappClicked?: boolean
+    whatsappClickedAt?: string | null
   }
 ) {
   try {
     const db = getAdminDb()
     if (!db) return
 
-    const payload = {
-      sessionId,
+    // We store user submissions in `responses/{autoId}`.
+    // We create once per session and then update it.
+    const responsesRef = db.collection('responses')
+
+    // Use deterministic query: sessionId should be unique per story submission.
+    // We'll find the latest doc with this sessionId; if none exists, create.
+    const existing = await responsesRef
+      .where('sessionId', '==', sessionId)
+      .orderBy('submittedAt', 'desc')
+      .limit(1)
+      .get()
+
+    const now = new Date().toISOString()
+
+    const responseItem: UserResponseItem = {
       question,
       response: answer,
-      // separate-fields requested by user
-      nameInput: meta?.nameInput ?? null,
-      dateInput: meta?.enteredDate ?? null,
-      selection: meta?.selection ?? null,
-      whatsappClicked: Boolean(meta?.whatsappClicked),
-      created_at: new Date().toISOString(),
+      timestamp: now,
     }
 
-    // 1) Keep existing storage (backward compatible)
-    await db.collection('sessions').doc(sessionId).update({
-      responses: FieldValue.arrayUnion({
-        question,
-        response: answer,
-        timestamp: new Date().toISOString(),
-      }),
-    })
+    if (existing.empty) {
+      await responsesRef.add({
+        sessionId,
+        userName: meta?.userName ?? null,
+        enteredDate: meta?.enteredDate ?? null,
+        correctedDate: meta?.correctedDate ?? null,
+        dateIsCorrect: meta?.dateIsCorrect ?? null,
+        selection: meta?.selection ?? null,
+        responses: [responseItem],
+        finalResponse: answer,
+        submittedAt: now,
+        completed: false,
+        whatsappClicked: Boolean(meta?.whatsappClicked),
+        whatsappClickedAt: meta?.whatsappClickedAt ?? null,
+      })
+      return
+    }
 
-    // 2) New separate collection for individual response entries
-    await db.collection('response_entries').add(payload)
+    const doc = existing.docs[0]
+
+    await doc.ref.update({
+      responses: FieldValue.arrayUnion(responseItem),
+      // keep finalResponse as the latest answer for now
+      finalResponse: answer,
+      submittedAt: now,
+      selection: meta?.selection ?? null,
+      completed: false,
+      whatsappClicked: Boolean(meta?.whatsappClicked),
+      whatsappClickedAt: meta?.whatsappClickedAt ?? null,
+      userName: meta?.userName ?? null,
+      enteredDate: meta?.enteredDate ?? null,
+      correctedDate: meta?.correctedDate ?? null,
+      dateIsCorrect: meta?.dateIsCorrect ?? null,
+    })
   } catch (error) {
     console.error('[DB] Error recording response:', error)
   }
 }
+
 
 
 export async function recordDateEntry(
@@ -126,7 +167,7 @@ export async function recordDateEntry(
     const db = getAdminDb()
     if (!db) return
 
-    // Store directly on the session document
+    // Analytics/session tracking can keep date info.
     await db.collection('sessions').doc(sessionId).update({
       entered_date: enteredDate,
       date_is_correct: isCorrect,
@@ -137,20 +178,37 @@ export async function recordDateEntry(
   }
 }
 
+
 export async function markStoryCompleted(sessionId: string, finalResponse: string) {
   try {
     const db = getAdminDb()
     if (!db) return
 
+    // Mark analytics completed only in sessions
     await db.collection('sessions').doc(sessionId).update({
       completed: true,
-      final_response: finalResponse,
       completed_at: new Date().toISOString(),
     })
+
+    // Also update the latest responses submission document
+    const latest = await db
+      .collection('responses')
+      .where('sessionId', '==', sessionId)
+      .orderBy('submittedAt', 'desc')
+      .limit(1)
+      .get()
+
+    if (!latest.empty) {
+      await latest.docs[0].ref.update({
+        finalResponse,
+        completed: true,
+      })
+    }
   } catch (error) {
     console.error('[DB] Error marking story complete:', error)
   }
 }
+
 
 export async function updateSessionUser(sessionId: string, userName: string) {
   try {

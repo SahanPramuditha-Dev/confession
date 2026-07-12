@@ -25,8 +25,8 @@ export function MemoryScene({ name = 'You', onContinue }: MemorySceneProps) {
 
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-center px-4 py-20">
-      <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-[#E2D1F9]/30 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/4 w-72 h-72 bg-[#FFB7B2]/30 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/4 left-1/4 w-48 h-48 sm:w-72 sm:h-72 bg-[#E2D1F9]/30 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/4 w-48 h-48 sm:w-72 sm:h-72 bg-[#FFB7B2]/30 rounded-full blur-3xl pointer-events-none" />
 
       <div className="relative z-10 max-w-2xl w-full space-y-10">
         <motion.div
@@ -46,7 +46,7 @@ export function MemoryScene({ name = 'You', onContinue }: MemorySceneProps) {
           </p>
         </motion.div>
 
-        <GlassCard className="p-8 md:p-10">
+        <GlassCard className="p-5 sm:p-8 md:p-10">
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}

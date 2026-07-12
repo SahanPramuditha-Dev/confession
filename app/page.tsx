@@ -247,7 +247,7 @@ export default function Page() {
           >
             <div className="text-center space-y-12 px-4">
               <motion.h1
-                className="font-serif text-5xl md:text-7xl font-light max-w-3xl text-white"
+                className="font-serif text-3xl sm:text-5xl md:text-7xl font-light max-w-3xl text-white"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1.4, ease: 'easeOut' }}
@@ -293,13 +293,13 @@ export default function Page() {
               className="text-center space-y-10 max-w-3xl"
             >
               <motion.h1
-                className="font-serif text-6xl md:text-8xl font-light bg-gradient-to-r from-[#FFB7B2] via-[#E2D1F9] to-[#FFE5B4] bg-clip-text text-transparent"
+                className="font-serif text-4xl sm:text-6xl md:text-8xl font-light bg-gradient-to-r from-[#FFB7B2] via-[#E2D1F9] to-[#FFE5B4] bg-clip-text text-transparent"
                 animate={{ y: [0, -6, 0] }}
                 transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
               >
                 {MESSAGES.hero}
               </motion.h1>
-              <p className="text-xl md:text-2xl text-white/90 font-light leading-relaxed">
+              <p className="text-lg sm:text-xl md:text-2xl text-white/90 font-light leading-relaxed">
                 {MESSAGES.heroSub}
               </p>
               <motion.button
@@ -375,7 +375,7 @@ export default function Page() {
                 initial={{ opacity: 0, y: 24 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2, duration: 1 }}
-                className="font-serif text-2xl md:text-3xl font-light text-white/55"
+                className="font-serif text-xl sm:text-2xl md:text-3xl font-light text-white/55"
               >
                 {name}…
               </motion.p>
@@ -383,7 +383,7 @@ export default function Page() {
                 initial={{ opacity: 0, y: 24 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.7, duration: 1.2 }}
-                className="font-serif text-5xl md:text-6xl font-light text-white/90 leading-tight"
+                className="font-serif text-3xl sm:text-5xl md:text-6xl font-light text-white/90 leading-tight"
               >
                 We&apos;ve only crossed paths once.
               </motion.h2>
@@ -391,7 +391,7 @@ export default function Page() {
                 initial={{ opacity: 0, y: 24 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1.4, duration: 1.2 }}
-                className="text-2xl md:text-3xl font-light text-white/65"
+                className="text-xl sm:text-2xl md:text-3xl font-light text-white/65"
               >
                 I don&apos;t know much about you.
               </motion.p>
@@ -399,7 +399,7 @@ export default function Page() {
                 initial={{ opacity: 0, y: 24 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 2.1, duration: 1.2 }}
-                className="text-2xl md:text-3xl font-light text-white/50"
+                className="text-xl sm:text-2xl md:text-3xl font-light text-white/50"
               >
                 You probably don&apos;t know me either.
               </motion.p>
@@ -467,7 +467,7 @@ export default function Page() {
                 initial={{ opacity: 0, y: 24 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3, duration: 1.2 }}
-                className="font-serif text-5xl md:text-6xl font-light text-white leading-tight"
+                className="font-serif text-3xl sm:text-5xl md:text-6xl font-light text-white leading-tight"
               >
                 But I needed to tell you, {name}.
               </motion.h2>
@@ -475,7 +475,7 @@ export default function Page() {
                 initial={{ opacity: 0, y: 24 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1, duration: 1.2 }}
-                className="text-xl md:text-2xl font-light text-white/90 leading-relaxed"
+                className="text-lg sm:text-xl md:text-2xl font-light text-white/90 leading-relaxed"
               >
                 What I feel is real. What I see in you is real. And I couldn&apos;t keep it
                 to myself any longer.
@@ -542,7 +542,7 @@ export default function Page() {
                 initial={{ opacity: 0, y: 32 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.8, duration: 1.2 }}
-                className="font-serif text-4xl md:text-5xl font-light text-white"
+                className="font-serif text-3xl sm:text-4xl md:text-5xl font-light text-white"
               >
                 The person this was made for…
               </motion.h2>
@@ -550,7 +550,7 @@ export default function Page() {
                 initial={{ opacity: 0, y: 32 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1.5, duration: 1.2 }}
-                className="font-serif text-3xl md:text-4xl font-light bg-gradient-to-r from-[#FFB7B2] to-[#E2D1F9] bg-clip-text text-transparent"
+                className="font-serif text-2xl sm:text-3xl md:text-4xl font-light bg-gradient-to-r from-[#FFB7B2] to-[#E2D1F9] bg-clip-text text-transparent"
               >
                 {name ? MESSAGES.finalReveal(name) : '…is someone unforgettable.'}
               </motion.p>

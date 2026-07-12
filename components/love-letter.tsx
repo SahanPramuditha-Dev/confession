@@ -61,7 +61,7 @@ export function LoveLetter({ name, isCorrectDate }: LoveLetterProps) {
         <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
 
         <motion.div
-          className="relative w-[420px] max-w-[90vw] rounded-2xl overflow-hidden"
+          className="relative w-full max-w-[90vw] sm:w-[420px] rounded-2xl overflow-hidden"
           initial={{ y: 50, opacity: 0, scale: 0.95 }}
           animate={{ y: 0, opacity: 1, scale: 1 }}
           transition={{ delay: 0.3, duration: 1, type: 'spring', bounce: 0.3 }}
@@ -75,7 +75,7 @@ export function LoveLetter({ name, isCorrectDate }: LoveLetterProps) {
 
           <FloatingHearts />
 
-          <div className="relative z-10 p-10 md:p-12">
+          <div className="relative z-10 p-6 sm:p-10 md:p-12">
             {/* Decorative corner heart */}
             <motion.div
               className="absolute top-5 right-6 text-3xl"
@@ -146,7 +146,7 @@ export function LoveLetter({ name, isCorrectDate }: LoveLetterProps) {
       <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
 
       <motion.div
-        className="relative w-[420px] max-w-[90vw] rounded-2xl overflow-hidden"
+        className="relative w-full max-w-[90vw] sm:w-[420px] rounded-2xl overflow-hidden"
         initial={{ y: 50, opacity: 0, scale: 0.95 }}
         animate={{ y: 0, opacity: 1, scale: 1 }}
         transition={{ delay: 0.3, duration: 1, type: 'spring', bounce: 0.3 }}
@@ -160,7 +160,7 @@ export function LoveLetter({ name, isCorrectDate }: LoveLetterProps) {
 
         <FloatingHearts />
 
-        <div className="relative z-10 p-10 md:p-12">
+        <div className="relative z-10 p-6 sm:p-10 md:p-12">
           {/* Decorative corner heart */}
           <motion.div
             className="absolute top-5 right-6 text-3xl"

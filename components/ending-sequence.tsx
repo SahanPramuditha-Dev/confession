@@ -80,7 +80,7 @@ export function EndingSequence({ name, onComplete }: EndingSequenceProps) {
             transition={{ duration: 2, repeat: Infinity }}
             className="mb-8"
           >
-            <div className="text-6xl font-bold bg-gradient-to-r from-[#FFB7B2] to-[#E2D1F9] bg-clip-text text-transparent mb-4">
+            <div className="text-4xl sm:text-6xl font-bold bg-gradient-to-r from-[#FFB7B2] to-[#E2D1F9] bg-clip-text text-transparent mb-4">
               Thank You
             </div>
             <p className="text-2xl text-white/90">
@@ -92,7 +92,7 @@ export function EndingSequence({ name, onComplete }: EndingSequenceProps) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1 }}
-            className="text-lg text-white/60 max-w-md"
+            className="text-lg text-white/60 max-w-md px-6"
           >
             For being part of my story
           </motion.p>

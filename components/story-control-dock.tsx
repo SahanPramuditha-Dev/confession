@@ -43,10 +43,10 @@ export function StoryControlDock({
       initial={{ y: 100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ delay: 2, duration: 0.8 }}
-      className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50"
+      className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 mb-[env(safe-area-inset-bottom)] w-[95vw] max-w-max"
     >
-      <div className="bg-gradient-to-b from-[rgba(255,77,109,0.1)] to-[rgba(157,78,221,0.1)] backdrop-blur-xl border border-[rgba(255,255,255,0.1)] rounded-full px-8 py-4 shadow-2xl">
-        <div className="flex items-center gap-6">
+      <div className="bg-gradient-to-b from-[rgba(255,77,109,0.1)] to-[rgba(157,78,221,0.1)] backdrop-blur-xl border border-[rgba(255,255,255,0.1)] rounded-full px-4 py-3 sm:px-8 sm:py-4 shadow-2xl overflow-hidden">
+        <div className="flex items-center justify-between sm:justify-center gap-2 sm:gap-4 md:gap-6">
           {/* Rewind */}
           <motion.button
             whileHover={{ scale: 1.1 }}
@@ -82,16 +82,16 @@ export function StoryControlDock({
           </motion.button>
 
           {/* Separator */}
-          <div className="w-px h-6 bg-gradient-to-b from-transparent via-[rgba(255,255,255,0.2)] to-transparent" />
+          <div className="hidden sm:block w-px h-6 bg-gradient-to-b from-transparent via-[rgba(255,255,255,0.2)] to-transparent" />
 
           {/* Time Display */}
-          <div className="text-xs font-mono text-[rgba(255,255,255,0.6)] min-w-[80px] text-center">
+          <div className="hidden sm:block text-xs font-mono text-[rgba(255,255,255,0.6)] min-w-[80px] text-center">
             <div>{formatTime(currentTime)}</div>
             <div className="text-[rgba(255,255,255,0.4)] text-[10px]">{formatTime(totalDuration)}</div>
           </div>
 
           {/* Progress Bar */}
-          <div className="w-32 h-1 bg-[rgba(255,255,255,0.1)] rounded-full overflow-hidden">
+          <div className="w-16 sm:w-32 h-1 bg-[rgba(255,255,255,0.1)] rounded-full overflow-hidden">
             <motion.div
               className="h-full bg-gradient-to-r from-[#FF4D6D] to-[#9D4EDD] rounded-full"
               style={{ width: `${progress * 100}%` }}
@@ -103,7 +103,7 @@ export function StoryControlDock({
           <motion.div
             onMouseEnter={() => setShowVolume(true)}
             onMouseLeave={() => setShowVolume(false)}
-            className="relative"
+            className="relative hidden sm:block"
           >
             <motion.button
               whileHover={{ scale: 1.1 }}
@@ -138,7 +138,7 @@ export function StoryControlDock({
           </motion.div>
 
           {/* Separator */}
-          <div className="w-px h-6 bg-gradient-to-b from-transparent via-[rgba(255,255,255,0.2)] to-transparent" />
+          <div className="hidden sm:block w-px h-6 bg-gradient-to-b from-transparent via-[rgba(255,255,255,0.2)] to-transparent" />
 
           {/* Replay */}
           <motion.button

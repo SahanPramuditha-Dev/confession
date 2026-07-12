@@ -43,10 +43,11 @@ export function InteractiveStar({
     <motion.div
       initial={{ opacity: 0, scale: 0 }}
       animate={{ opacity: isCollected ? 1 : baseOpacity, scale }}
-      className="absolute cursor-pointer z-10"
+      className="absolute cursor-pointer z-10 min-w-[44px] min-h-[44px] flex items-center justify-center"
       style={{ left: `${x}%`, top: `${y}%`, transform: 'translate(-50%, -50%)' }}
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
+      onClick={handleClick}
     >
       {/* Glow container */}
       <motion.div
@@ -64,8 +65,7 @@ export function InteractiveStar({
           }}
           whileHover={{ scale: 1.4 }}
           whileTap={{ scale: 0.9 }}
-          onClick={handleClick}
-          className={`w-${size} h-${size} rounded-full transition-all ${
+          className={`rounded-full transition-all ${
             isCollected
               ? 'bg-gradient-to-r from-[#FF758C] to-[#FF7EB3]'
               : 'bg-white'
@@ -93,10 +93,10 @@ export function InteractiveStar({
       {(isHovered || isActive) && (
         <motion.div
           initial={{ opacity: 0, y: 15, scale: 0.95 }}
-          animate={{ opacity: 1, y: -100, scale: 1 }}
+          animate={{ opacity: 1, y: -90, scale: 1 }}
           exit={{ opacity: 0, y: 15, scale: 0.95 }}
           transition={{ duration: 1.2, ease: "easeInOut" }}
-          className="absolute left-1/2 transform -translate-x-1/2 w-72 h-36 bg-white/10 backdrop-blur-md border border-white/30 rounded-2xl p-5 text-center shadow-2xl pointer-events-none z-50 flex flex-col items-center justify-center"
+          className="absolute left-1/2 transform -translate-x-1/2 w-56 sm:w-72 h-auto min-h-[120px] sm:min-h-[144px] bg-white/10 backdrop-blur-md border border-white/30 rounded-2xl p-4 sm:p-5 text-center shadow-2xl pointer-events-none z-50 flex flex-col items-center justify-center"
         >
           <h3 className="text-xl font-serif text-white mb-2 font-light">{title}</h3>
           <p className="text-sm text-white/90 leading-relaxed font-light">{message}</p>

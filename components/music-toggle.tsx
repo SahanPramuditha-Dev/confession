@@ -39,7 +39,7 @@ export function MusicToggle() {
       transition={{ delay: 2 }}
       onClick={toggle}
       aria-label={enabled ? 'Turn music off' : 'Turn music on'}
-      className="fixed bottom-4 right-4 z-[60] w-10 h-10 rounded-full bg-white/10 border border-white/20 backdrop-blur-md flex items-center justify-center text-sm text-white hover:bg-white/20 transition-all"
+      className="fixed bottom-[calc(1rem+env(safe-area-inset-bottom))] right-4 z-[60] w-11 h-11 rounded-full bg-white/10 border border-white/20 backdrop-blur-md flex items-center justify-center text-sm text-white hover:bg-white/20 transition-all"
     >
       {enabled ? '♪' : '♫'}
     </motion.button>

@@ -140,7 +140,7 @@ export function Envelope({ onOpen, name }: EnvelopeProps) {
             >
               {/* Main envelope body */}
               <motion.div
-                className="relative w-80 h-48 rounded-2xl overflow-hidden shadow-2xl"
+                className="relative w-64 h-40 sm:w-80 sm:h-48 rounded-2xl overflow-hidden shadow-2xl"
                 animate={{
                   boxShadow: [
                     '0 20px 60px rgba(255, 183, 178, 0.2), 0 0 40px rgba(226, 209, 249, 0.15)',
@@ -338,7 +338,7 @@ export function Envelope({ onOpen, name }: EnvelopeProps) {
               initial={{ y: 40, opacity: 0, scale: 0.92 }}
               animate={{ y: 0, opacity: 1, scale: 1 }}
               transition={{ duration: 1.2, type: 'spring', bounce: 0.25 }}
-              className="relative w-[400px] max-w-[92vw]"
+              className="relative w-full max-w-[92vw] sm:w-[400px]"
             >
               {/* Gentle floating motion */}
               <motion.div
@@ -361,7 +361,7 @@ export function Envelope({ onOpen, name }: EnvelopeProps) {
 
                   <FloatingPetals />
 
-                  <div className="relative z-10 px-10 py-12 md:px-12 md:py-14">
+                  <div className="relative z-10 px-6 py-8 sm:px-10 sm:py-12 md:px-12 md:py-14">
                     {/* Wax seal accent */}
                     <motion.div
                       className="absolute -top-3 left-1/2 -translate-x-1/2 w-10 h-10 rounded-full bg-gradient-to-br from-[#E8A0A8] to-[#D4849A] shadow-md flex items-center justify-center"
@@ -399,7 +399,7 @@ export function Envelope({ onOpen, name }: EnvelopeProps) {
                         initial={{ opacity: 0, y: 12 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.6, duration: 0.9 }}
-                        className="text-[#4A3728] font-serif text-2xl font-medium tracking-wide"
+                        className="text-[#4A3728] font-serif text-xl sm:text-2xl font-medium tracking-wide"
                       >
                         {name ? `Dear ${name},` : 'Dear you,'}
                       </motion.p>
@@ -456,7 +456,7 @@ export function Envelope({ onOpen, name }: EnvelopeProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 3.8, duration: 0.8 }}
             onClick={() => onOpen?.()}
-            className="fixed bottom-8 px-8 py-3 bg-gradient-to-r from-[#FF758C] to-[#FF7EB3] rounded-full font-semibold text-white hover:shadow-xl transition-all z-[60]"
+            className="fixed bottom-8 left-1/2 -translate-x-1/2 mb-[env(safe-area-inset-bottom)] px-8 py-3 bg-gradient-to-r from-[#FF758C] to-[#FF7EB3] rounded-full font-semibold text-white hover:shadow-xl transition-all z-[60]"
           >
             Continue →
           </motion.button>
