@@ -3,18 +3,14 @@
 import { motion } from 'framer-motion'
 import { useState } from 'react'
 import { analyticsTracker } from '@/lib/analytics'
+import { useLang } from '@/lib/lang-context'
+import { t } from '@/lib/i18n'
 
 interface EnvelopeProps {
   onOpen?: () => void
   name?: string
 }
 
-const LETTER_LINES = [
-  "I know we've only met once.",
-  "Maybe this is unexpected. Maybe it's too soon.",
-  "But I'd regret never telling you that meeting you left a lasting impression on me.",
-  "I'd genuinely like the chance to know you better.",
-] as const
 
 function FloatingPetals() {
   return (
@@ -49,6 +45,7 @@ function FloatingPetals() {
 }
 
 export function Envelope({ onOpen, name }: EnvelopeProps) {
+  const { lang } = useLang()
   const [isOpen, setIsOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
@@ -411,14 +408,14 @@ export function Envelope({ onOpen, name }: EnvelopeProps) {
                         className="h-px bg-gradient-to-r from-[#D4849A]/70 to-transparent"
                       />
 
-                      {LETTER_LINES.map((line, i) => (
+                      {[t(lang, 'letter_line1'), t(lang, 'letter_line2'), t(lang, 'letter_line3'), t(lang, 'letter_line4')].map((line, i, arr) => (
                         <motion.p
-                          key={line}
+                          key={i}
                           initial={{ opacity: 0, y: 14 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ delay: 1.1 + i * 0.45, duration: 0.9, ease: 'easeOut' }}
                           className={
-                            i === LETTER_LINES.length - 1
+                            i === arr.length - 1
                               ? 'text-[#7A3E4A] font-serif text-xl leading-relaxed italic pt-2 font-medium'
                               : 'text-[#5C4636] font-serif text-[17px] leading-[1.85]'
                           }
@@ -441,7 +438,7 @@ export function Envelope({ onOpen, name }: EnvelopeProps) {
                       transition={{ delay: 3.5, duration: 0.8 }}
                       className="mt-5 text-center text-[#9A7B6A] font-serif text-sm italic"
                     >
-                      with all my honesty
+                      {t(lang, 'letter_closing')}
                     </motion.p>
                   </div>
                 </div>
@@ -458,7 +455,7 @@ export function Envelope({ onOpen, name }: EnvelopeProps) {
             onClick={() => onOpen?.()}
             className="fixed bottom-8 left-1/2 -translate-x-1/2 mb-[env(safe-area-inset-bottom)] px-8 py-3 bg-gradient-to-r from-[#FF758C] to-[#FF7EB3] rounded-full font-semibold text-white hover:shadow-xl transition-all z-[60]"
           >
-            Continue →
+            {t(lang, 'name_continue')}
           </motion.button>
         )}
       </div>

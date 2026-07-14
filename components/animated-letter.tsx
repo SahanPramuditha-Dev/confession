@@ -3,6 +3,8 @@
 import { motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
 import { LoveLetter } from './love-letter'
+import { useLang } from '@/lib/lang-context'
+import { t } from '@/lib/i18n'
 
 interface AnimatedLetterProps {
   name: string
@@ -10,6 +12,7 @@ interface AnimatedLetterProps {
 }
 
 export function AnimatedLetter({ name, onComplete }: AnimatedLetterProps) {
+  const { lang } = useLang()
   const [isCorrectDate, setIsCorrectDate] = useState(false)
   const [showLetter, setShowLetter] = useState(false)
 
@@ -49,7 +52,7 @@ export function AnimatedLetter({ name, onComplete }: AnimatedLetterProps) {
             onClick={handleComplete}
             className="fixed bottom-8 left-1/2 -translate-x-1/2 mb-[env(safe-area-inset-bottom)] px-8 py-3 bg-gradient-to-r from-[#FF758C] to-[#FF7EB3] rounded-full font-semibold text-white hover:shadow-xl transition-all z-[60]"
           >
-            Continue →
+            {t(lang, 'name_continue')}
           </motion.button>
         </>
       )}

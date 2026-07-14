@@ -2,6 +2,7 @@ import { Analytics } from '@vercel/analytics/next'
 import { Cormorant_Garamond, Inter } from 'next/font/google'
 import type { Metadata, Viewport } from 'next'
 import { SITE_DESCRIPTION, SITE_TITLE } from '@/lib/constants'
+import { LangProvider } from '@/lib/lang-context'
 import './globals.css'
 
 const cormorant = Cormorant_Garamond({
@@ -63,9 +64,11 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`bg-[#070B18] ${cormorant.variable} ${inter.variable}`}>
+    <html lang="si" className={`bg-[#070B18] ${cormorant.variable} ${inter.variable}`}>
       <body className="font-sans antialiased bg-[#070B18] text-white">
-        {children}
+        <LangProvider>
+          {children}
+        </LangProvider>
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>

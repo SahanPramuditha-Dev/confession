@@ -3,6 +3,8 @@
 import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import { FIRST_MEETING_DATE } from '@/lib/constants'
+import { useLang } from '@/lib/lang-context'
+import { t } from '@/lib/i18n'
 
 interface LoveLetterProps {
   name: string
@@ -10,6 +12,7 @@ interface LoveLetterProps {
 }
 
 export function LoveLetter({ name, isCorrectDate }: LoveLetterProps) {
+  const { lang } = useLang()
   const [showContent, setShowContent] = useState(false)
 
   useEffect(() => {
@@ -91,7 +94,7 @@ export function LoveLetter({ name, isCorrectDate }: LoveLetterProps) {
               transition={{ delay: 0.4, duration: 1 }}
               className="font-serif text-3xl md:text-4xl font-light text-white/90 mb-1"
             >
-              You Remembered It
+              {t(lang, 'letter_correct_title')}
             </motion.h2>
 
             <motion.div
@@ -107,7 +110,7 @@ export function LoveLetter({ name, isCorrectDate }: LoveLetterProps) {
               transition={{ delay: 1.4, duration: 1 }}
               className="text-white/75 font-serif text-[17px] leading-[1.8] mb-5"
             >
-              <span className="font-medium text-white/90">{name}</span>, the fact that you remembered tells me everything I need to know.
+              <span className="font-medium text-white/90">{name}</span>{', '}{t(lang, 'letter_correct_body1', name).replace(name + ', ', '')}
             </motion.p>
 
             <motion.p
@@ -116,7 +119,7 @@ export function LoveLetter({ name, isCorrectDate }: LoveLetterProps) {
               transition={{ delay: 1.8, duration: 1 }}
               className="text-white/70 font-serif text-[17px] leading-[1.8] mb-8"
             >
-              {daysAgo} days have passed since that moment, but it still feels like yesterday. Some meetings change everything, and ours was one of them.
+              {t(lang, 'letter_correct_body2', daysAgo)}
             </motion.p>
 
             <motion.div
@@ -125,9 +128,9 @@ export function LoveLetter({ name, isCorrectDate }: LoveLetterProps) {
               transition={{ delay: 2.2, duration: 1 }}
               className="text-center pt-6 border-t border-white/10 mt-2"
             >
-              <p className="text-[#FF8A9B] font-serif text-[16px] italic leading-relaxed">A little date carrying a beautiful memory.</p>
-              <p className="text-[#FF8A9B] font-serif text-[16px] italic mt-2 mb-5 leading-relaxed">Some moments are quietly special, and some people make them unforgettable.</p>
-              <p className="text-lg font-serif font-light text-white/85">Thank you for remembering this one <span className="text-[#E63946] drop-shadow-[0_0_6px_rgba(230,57,70,0.4)]">❤️</span></p>
+              <p className="text-[#FF8A9B] font-serif text-[16px] italic leading-relaxed">{t(lang, 'letter_correct_closing1')}</p>
+              <p className="text-[#FF8A9B] font-serif text-[16px] italic mt-2 mb-5 leading-relaxed">{t(lang, 'letter_correct_closing2')}</p>
+              <p className="text-lg font-serif font-light text-white/85">{t(lang, 'letter_correct_closing3')} <span className="text-[#E63946] drop-shadow-[0_0_6px_rgba(230,57,70,0.4)]">❤️</span></p>
             </motion.div>
           </div>
         </motion.div>
@@ -176,7 +179,7 @@ export function LoveLetter({ name, isCorrectDate }: LoveLetterProps) {
             transition={{ delay: 0.4, duration: 1 }}
             className="font-serif text-3xl md:text-4xl font-light text-white/90 mb-1"
           >
-            That's Okay <span className="text-[#E63946] drop-shadow-[0_0_8px_rgba(230,57,70,0.4)] inline-block">❤️</span>
+            That&apos;s Okay <span className="text-[#E63946] drop-shadow-[0_0_8px_rgba(230,57,70,0.4)] inline-block">❤️</span>
           </motion.h2>
 
           <motion.div
@@ -192,7 +195,7 @@ export function LoveLetter({ name, isCorrectDate }: LoveLetterProps) {
             transition={{ delay: 1.4, duration: 1 }}
             className="text-white/75 font-serif text-[17px] leading-[1.8] mb-5"
           >
-            <span className="font-medium text-white/90">{name}</span>, maybe the numbers were a little different, but the meaning behind this moment is what truly matters.
+            <span className="font-medium text-white/90">{name}</span>{', '}{t(lang, 'letter_wrong_body1', name).replace(name + ', ', '')}
           </motion.p>
 
           <motion.p
@@ -201,7 +204,7 @@ export function LoveLetter({ name, isCorrectDate }: LoveLetterProps) {
             transition={{ delay: 1.8, duration: 1 }}
             className="text-white/70 font-serif text-[17px] leading-[1.8] mb-8"
           >
-            Some memories are not kept in calendars... they are kept in our hearts ✨
+            {t(lang, 'letter_wrong_body2')}
           </motion.p>
 
           <motion.div
@@ -210,7 +213,7 @@ export function LoveLetter({ name, isCorrectDate }: LoveLetterProps) {
             transition={{ delay: 2.2, duration: 1 }}
             className="text-center pt-6 border-t border-white/10 mt-2"
           >
-            <p className="text-[#FF8A9B] font-serif text-[16px] italic leading-relaxed">Let's continue this little journey together.</p>
+            <p className="text-[#FF8A9B] font-serif text-[16px] italic leading-relaxed">{t(lang, 'letter_wrong_closing')}</p>
           </motion.div>
         </div>
       </motion.div>

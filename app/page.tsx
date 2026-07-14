@@ -15,10 +15,12 @@ import { DateEntryPin } from '@/components/date-entry-pin'
 import { AnimatedLetter } from '@/components/animated-letter'
 import { EndingSequence } from '@/components/ending-sequence'
 import { MusicToggle } from '@/components/music-toggle'
+import { LangToggle } from '@/components/lang-toggle'
 import { storyController, sectionConfigs } from '@/lib/story-controller'
 import { analyticsTracker } from '@/lib/analytics'
+import { useLang } from '@/lib/lang-context'
+import { t } from '@/lib/i18n'
 import {
-  MESSAGES,
   WHATSAPP_NUMBER,
   WHATSAPP_MESSAGE,
   TRANSITION_MS,
@@ -46,6 +48,7 @@ function getInitialSection(): Section {
 }
 
 export default function Page() {
+  const { lang } = useLang()
   const [section, setSection] = useState<Section>('loading')
   const [name, setName] = useState('')
   const [inputName, setInputName] = useState('')
@@ -222,6 +225,7 @@ export default function Page() {
     <main className="relative min-h-screen bg-gradient-to-br from-[#2a0414] via-[#4a0e26] to-[#1a0009] text-white overflow-hidden">
       <SoftParticles />
       <MusicToggle />
+      <LangToggle />
       <ParticleBurst trigger={particleBurst} position={{ x: 50, y: 50 }} color="#FF4D6D" />
 
       {showConfetti && windowSize.width > 0 && (
@@ -250,7 +254,7 @@ export default function Page() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1.4, ease: 'easeOut' }}
               >
-                <Typewriter text={MESSAGES.loading} speed={42} />
+                <Typewriter text={t(lang, 'loading_line1')} speed={42} />
               </motion.h1>
               <motion.div
                 animate={{ y: [0, 10, 0] }}
@@ -262,7 +266,7 @@ export default function Page() {
                   animate={{ opacity: 1 }}
                   transition={{ duration: 1.4, delay: 1, ease: 'easeOut' }}
                 >
-                  {MESSAGES.loadingSub}
+                  {t(lang, 'loading_line2')}
                 </motion.p>
               </motion.div>
               <motion.div
@@ -295,10 +299,10 @@ export default function Page() {
                 animate={{ y: [0, -6, 0] }}
                 transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
               >
-                {MESSAGES.hero}
+                {t(lang, 'hero_title')}
               </motion.h1>
               <p className="text-lg sm:text-xl md:text-2xl text-white/90 font-light leading-relaxed">
-                {MESSAGES.heroSub}
+                {t(lang, 'hero_sub')}
               </p>
               <motion.button
                 initial={{ opacity: 0, scale: 0.92 }}
@@ -309,7 +313,7 @@ export default function Page() {
                 onClick={() => handleContinue('name')}
                 className="mt-8 px-10 py-4 bg-gradient-to-r from-[#FF758C] to-[#FF7EB3] rounded-full font-semibold text-white shadow-lg"
               >
-                Begin →
+                {t(lang, 'hero_button')}
               </motion.button>
             </motion.div>
           </motion.section>
@@ -325,14 +329,14 @@ export default function Page() {
           >
             <GlassCard className="w-full max-w-md">
               <h2 className="font-serif text-3xl font-light mb-2 text-center">
-                {MESSAGES.namePrompt}
+                {t(lang, 'name_prompt')}
               </h2>
               <p className="text-sm text-white/60 text-center mb-6 font-light">
-                Just your first name — this stays between us.
+                {t(lang, 'name_sub')}
               </p>
               <input
                 type="text"
-                placeholder={MESSAGES.namePlaceholder}
+                placeholder={t(lang, 'name_placeholder')}
                 value={inputName}
                 onChange={(e) => setInputName(e.target.value)}
                 onKeyDown={(e) => {
@@ -346,7 +350,7 @@ export default function Page() {
                 disabled={!inputName.trim()}
                 className="w-full mt-5 px-6 py-3.5 bg-gradient-to-r from-[#FF758C] to-[#FF7EB3] rounded-2xl font-semibold hover:shadow-xl transition-all text-white disabled:from-white/10 disabled:to-white/5 disabled:text-white/40 disabled:cursor-not-allowed disabled:shadow-none border border-transparent disabled:border-white/10"
               >
-                Continue →
+                {t(lang, 'name_continue')}
               </button>
             </GlassCard>
           </motion.section>
@@ -383,7 +387,7 @@ export default function Page() {
                 transition={{ delay: 0.7, duration: 1.2 }}
                 className="font-serif text-3xl sm:text-5xl md:text-6xl font-light text-white/90 leading-tight"
               >
-                We&apos;ve only crossed paths once.
+                {t(lang, 'ch1_line1')}
               </motion.h2>
               <motion.p
                 initial={{ opacity: 0, y: 24 }}
@@ -391,7 +395,7 @@ export default function Page() {
                 transition={{ delay: 1.4, duration: 1.2 }}
                 className="text-xl sm:text-2xl md:text-3xl font-light text-white/65"
               >
-                I don&apos;t know much about you.
+                {t(lang, 'ch1_line2')}
               </motion.p>
               <motion.p
                 initial={{ opacity: 0, y: 24 }}
@@ -399,7 +403,7 @@ export default function Page() {
                 transition={{ delay: 2.1, duration: 1.2 }}
                 className="text-xl sm:text-2xl md:text-3xl font-light text-white/50"
               >
-                You probably don&apos;t know me either.
+                {t(lang, 'ch1_line3')}
               </motion.p>
               <motion.button
                 initial={{ opacity: 0 }}
@@ -410,7 +414,7 @@ export default function Page() {
                 onClick={() => handleContinue('chapter2')}
                 className="mt-6 px-8 py-4 bg-white/10 border border-white/20 rounded-full font-semibold text-white"
               >
-                Next →
+                {t(lang, 'ch1_button')}
               </motion.button>
             </div>
           </motion.section>
@@ -429,7 +433,7 @@ export default function Page() {
               animate={{ opacity: 1 }}
               className="font-serif text-2xl text-white/80 mb-10 text-center max-w-lg font-light"
             >
-              {MESSAGES.chapter2}
+              {t(lang, 'ch2_intro')}
             </motion.p>
             <TimelineCards />
             <motion.button
@@ -441,7 +445,7 @@ export default function Page() {
               onClick={() => handleContinue('chapter3')}
               className="mt-12 px-8 py-4 bg-white/10 border border-white/20 rounded-full font-semibold text-white"
             >
-              Continue →
+              {t(lang, 'ch2_button')}
             </motion.button>
           </motion.section>
         )}
@@ -461,7 +465,7 @@ export default function Page() {
                 transition={{ delay: 0.3, duration: 1.2 }}
                 className="font-serif text-3xl sm:text-5xl md:text-6xl font-light text-white leading-tight"
               >
-                But I needed to tell you, {name}.
+                {t(lang, 'ch3_title', name)}
               </motion.h2>
               <motion.p
                 initial={{ opacity: 0, y: 24 }}
@@ -469,8 +473,7 @@ export default function Page() {
                 transition={{ delay: 1, duration: 1.2 }}
                 className="text-lg sm:text-xl md:text-2xl font-light text-white/90 leading-relaxed"
               >
-                What I feel is real. What I see in you is real. And I couldn&apos;t keep it
-                to myself any longer.
+                {t(lang, 'ch3_body')}
               </motion.p>
               <motion.p
                 initial={{ opacity: 0 }}
@@ -478,7 +481,7 @@ export default function Page() {
                 transition={{ delay: 1.8, duration: 1 }}
                 className="text-lg text-white/60 italic font-serif"
               >
-                This moment matters. You matter.
+                {t(lang, 'ch3_italic')}
               </motion.p>
             </div>
             <motion.button
@@ -490,7 +493,7 @@ export default function Page() {
               onClick={() => handleContinue('envelope')}
               className="mt-12 px-8 py-4 bg-white/10 border border-white/20 rounded-full font-semibold text-white"
             >
-              Open what&apos;s next →
+              {t(lang, 'ch3_button')}
             </motion.button>
           </motion.section>
         )}
@@ -536,7 +539,7 @@ export default function Page() {
                 transition={{ delay: 0.8, duration: 1.2 }}
                 className="font-serif text-3xl sm:text-4xl md:text-5xl font-light text-white"
               >
-                The person this was made for…
+                {t(lang, 'reveal_line1')}
               </motion.h2>
               <motion.p
                 initial={{ opacity: 0, y: 32 }}
@@ -544,7 +547,7 @@ export default function Page() {
                 transition={{ delay: 1.5, duration: 1.2 }}
                 className="font-serif text-2xl sm:text-3xl md:text-4xl font-light bg-gradient-to-r from-[#FFB7B2] to-[#E2D1F9] bg-clip-text text-transparent"
               >
-                {name ? MESSAGES.finalReveal(name) : '…is someone unforgettable.'}
+                {name ? t(lang, 'reveal_name', name) : '…'}
               </motion.p>
             </div>
 
@@ -557,7 +560,7 @@ export default function Page() {
               onClick={() => handleContinue('memory')}
               className="px-10 py-4 bg-gradient-to-r from-[#FF758C] to-[#FF7EB3] rounded-full font-semibold text-white shadow-lg"
             >
-              Continue →
+              {t(lang, 'reveal_button')}
             </motion.button>
           </motion.section>
         )}
@@ -594,9 +597,9 @@ export default function Page() {
                   transition={{ delay: 0.4 }}
                   className="font-serif text-2xl md:text-3xl font-light text-white/90"
                 >
-                  {response === 'yes' && MESSAGES.yesResponse}
-                  {response === 'thanks' && MESSAGES.thanksResponse}
-                  {response === 'time' && MESSAGES.timeResponse}
+                  {response === 'yes' && t(lang, 'reply_yes')}
+                  {response === 'thanks' && t(lang, 'reply_thanks')}
+                  {response === 'time' && t(lang, 'reply_time')}
                 </motion.p>
 
                 {response === 'yes' && (
@@ -617,7 +620,7 @@ export default function Page() {
                     }}
                     className="inline-block mt-4 px-10 py-4 bg-gradient-to-r from-[#25D366] to-[#128C7E] rounded-full font-semibold hover:shadow-xl transition-all text-white"
                   >
-                    Message on WhatsApp 💬
+                    {t(lang, 'whatsapp_button')}
                   </motion.a>
                 )}
               </div>
@@ -629,17 +632,17 @@ export default function Page() {
                 transition={{ duration: 0.9 }}
               >
                 <h2 className="font-serif text-3xl md:text-4xl font-light text-white">
-                  {MESSAGES.responsePrompt}
+                  {t(lang, 'response_prompt')}
                 </h2>
                 <p className="text-white/60 text-sm font-light">
-                  No pressure — whatever you choose is perfectly okay.
+                  {t(lang, 'response_sub')}
                 </p>
 
                 <div className="space-y-3">
                   {[
-                    { id: 'yes', emoji: '💙', label: "I'd like to get to know you" },
-                    { id: 'thanks', emoji: '🤍', label: 'Thank you for telling me' },
-                    { id: 'time', emoji: '🌼', label: 'I need some time' },
+                    { id: 'yes', label: t(lang, 'response_yes') },
+                    { id: 'thanks', label: t(lang, 'response_thanks') },
+                    { id: 'time', label: t(lang, 'response_time') },
                   ].map((opt, i) => (
                     <motion.button
                       key={opt.id}
@@ -656,9 +659,8 @@ export default function Page() {
                       }}
                       whileTap={{ scale: 0.97 }}
                       onClick={() => handleResponse(opt.id)}
-                      className="w-full px-6 py-4 bg-white/10 border border-white/20 rounded-2xl font-light text-white text-left flex items-center gap-3 transition-colors hover:bg-white/20"
+                      className="w-full px-6 py-4 bg-white/10 border border-white/20 rounded-2xl font-light text-white text-left transition-colors hover:bg-white/20"
                     >
-                      <span className="text-xl">{opt.emoji}</span>
                       <span>{opt.label}</span>
                     </motion.button>
                   ))}

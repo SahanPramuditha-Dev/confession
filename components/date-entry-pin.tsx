@@ -2,7 +2,9 @@
 
 import { motion } from 'framer-motion'
 import { useState, useEffect, useCallback } from 'react'
-import { FIRST_MEETING_DATE, MESSAGES } from '@/lib/constants'
+import { FIRST_MEETING_DATE } from '@/lib/constants'
+import { useLang } from '@/lib/lang-context'
+import { t } from '@/lib/i18n'
 import { analyticsTracker } from '@/lib/analytics'
 
 interface DateEntryPinProps {
@@ -11,6 +13,7 @@ interface DateEntryPinProps {
 }
 
 export function DateEntryPin({ onSubmit, name }: DateEntryPinProps) {
+  const { lang } = useLang()
   const [pin, setPin] = useState('')
   const [error, setError] = useState(false)
   const [submitted, setSubmitted] = useState(false)
@@ -20,9 +23,9 @@ export function DateEntryPin({ onSubmit, name }: DateEntryPinProps) {
   const correctDate = `${FIRST_MEETING_DATE.getFullYear()}${String(FIRST_MEETING_DATE.getMonth() + 1).padStart(2, '0')}${String(FIRST_MEETING_DATE.getDate()).padStart(2, '0')}`
 
   const getHintMessage = () => {
-    if (attempts === 0) return `${name}, only you would remember this date…`
-    if (attempts === 1) return 'Think of the day we first met…'
-    return 'The feeling matters more than the numbers 🤍'
+    if (attempts === 0) return t(lang, 'date_hint_0', name)
+    if (attempts === 1) return t(lang, 'date_hint_1')
+    return t(lang, 'date_hint_2')
   }
 
   const handleDigit = (digit: string) => {

@@ -1,6 +1,8 @@
 'use client'
 
-import { FIRST_MEETING_DATE, MESSAGES } from '@/lib/constants'
+import { FIRST_MEETING_DATE } from '@/lib/constants'
+import { useLang } from '@/lib/lang-context'
+import { t } from '@/lib/i18n'
 import { motion } from 'framer-motion'
 import { useEffect } from 'react'
 import { GlassCard } from './glass-card'
@@ -12,6 +14,7 @@ interface MemorySceneProps {
 }
 
 export function MemoryScene({ name = 'You', onContinue }: MemorySceneProps) {
+  const { lang } = useLang()
   useEffect(() => {
     analyticsTracker.trackEvent('response_screen_viewed', 'memory')
   }, [])
@@ -36,13 +39,13 @@ export function MemoryScene({ name = 'You', onContinue }: MemorySceneProps) {
           className="text-center space-y-4"
         >
           <p className="text-sm tracking-[0.2em] uppercase text-white/50 font-serif">
-            A memory worth keeping
+            {t(lang, 'memory_label')}
           </p>
           <h2 className="font-serif text-4xl md:text-5xl font-light text-white">
             {name}…
           </h2>
           <p className="text-lg text-white/80 font-light">
-            {MESSAGES.memoryIntro(daysAgo)}
+            {t(lang, 'memory_days', daysAgo)}
           </p>
         </motion.div>
 
@@ -54,11 +57,10 @@ export function MemoryScene({ name = 'You', onContinue }: MemorySceneProps) {
             className="space-y-6 text-center"
           >
             <p className="text-white/90 font-light leading-relaxed text-lg">
-              Every day since then, I&apos;ve thought about that encounter — about you —
-              and how a single moment can quietly shift everything.
+              {t(lang, 'memory_body')}
             </p>
             <p className="text-xl font-light text-transparent bg-clip-text bg-gradient-to-r from-[#FFB7B2] via-[#FFE5B4] to-[#E2D1F9] italic font-serif">
-              &ldquo;Would you like to explore this connection with me?&rdquo;
+              {t(lang, 'memory_question')}
             </p>
           </motion.div>
         </GlassCard>
@@ -72,7 +74,7 @@ export function MemoryScene({ name = 'You', onContinue }: MemorySceneProps) {
           onClick={onContinue}
           className="mx-auto block px-10 py-4 bg-gradient-to-r from-[#FF758C] to-[#FF7EB3] rounded-full font-semibold text-white transition-all hover:shadow-xl"
         >
-          Answer gently →
+          {t(lang, 'memory_button')}
         </motion.button>
       </div>
     </section>
