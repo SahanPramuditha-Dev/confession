@@ -142,7 +142,7 @@ export function DateEntryPin({ onSubmit, name }: DateEntryPinProps) {
           transition={{ delay: 0.4 }}
           className="text-xs text-white/35 mb-8"
         >
-          {MESSAGES.dateHint}
+          (YYYYMMDD)
         </motion.p>
 
         <motion.div
