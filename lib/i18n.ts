@@ -1,44 +1,46 @@
 // Bilingual content — Sinhala (default) and English
-// Usage: t(lang, 'key') or t(lang, 'key', { name: '...' })
+// Sinhala is written as intimate, poetic prose — NOT translated from English.
+// Uses "ඔයා" (intimate) not "ඔබ" (formal). Short sentences. Natural pauses (…).
 
 export type Lang = 'si' | 'en'
 
 export const translations = {
+
   // ── Loading Screen ────────────────────────────────────────────────────────
   loading_line1: {
-    si: 'සමහර කතා ගත ගණනාවකින් ආරම්භ වේ.',
+    si: 'සමහර කතා ලියවෙන්නේ අවුරුදු ගණනාවක් ගිය පසුවයි...',
     en: 'Some stories begin with years.',
   },
   loading_line2: {
-    si: 'සමහර ඒවා එක් මොහොතකින් ආරම්භ වේ.',
+    si: 'ඒත් සමහර කතා... එකම එක මොහොතකින් හිතේ ලියවෙනවා.',
     en: 'Some begin with a single moment.',
   },
 
   // ── Hero Screen ───────────────────────────────────────────────────────────
   hero_title: {
-    si: 'එක් හමුවීමකින්',
+    si: 'එක් හමුවීමක් නිසා...',
     en: 'One Encounter',
   },
   hero_sub: {
-    si: 'සමහරවිට එකම හමුවීමකින් ජීවිතය වෙනස් වෙයි.',
+    si: 'සමහරවිට... එකම එක හමුවීමක් ජීවිතයක්ම වෙනස් කරන්න ප්‍රමාණවත් වෙනවා.',
     en: 'Sometimes one meeting is enough to change everything.',
   },
   hero_button: {
-    si: 'ආරම්භ කරන්න →',
+    si: 'ඉදිරියට යමු →',
     en: 'Begin →',
   },
 
   // ── Name Screen ───────────────────────────────────────────────────────────
   name_prompt: {
-    si: 'මෙම කතාව ලියා ඇත්තේ ඔබ වෙනුවෙනි.',
+    si: 'මේ කතාව ලියවුණේ ඔයා වෙනුවෙන්මයි.',
     en: 'This story was written for you.',
   },
   name_sub: {
-    si: 'ඔබේ නම කියන්න — එය අප අතරේ රහසක් ලෙස රැදේ.',
+    si: 'ඔයාගේ නම කියන්න... මේ රහස අපි දෙන්නා අතරම තියේවි.',
     en: 'Just your name — this stays between us.',
   },
   name_placeholder: {
-    si: 'ඔබේ නම…',
+    si: 'ඔයාගේ නම...',
     en: 'Your first name…',
   },
   name_continue: {
@@ -48,29 +50,29 @@ export const translations = {
 
   // ── Date Entry Screen ─────────────────────────────────────────────────────
   date_hint_0: {
-    si: (name: string) => `${name}, ඒ විශේෂ දිනය ඔබ තනිව දන්නවා…`,
+    si: (name: string) => `${name}... ඒ දිනය ඔයාට විතරයි මතක ඇත්තේ.`,
     en: (name: string) => `${name}, only you would remember this date…`,
   },
   date_hint_1: {
-    si: 'අපි මුලින්ම හමු වූ දිනය මතක් කර ගන්න…',
+    si: 'අපි මුල්ම වතාවට හමු වුණ දිනය... ඒ ගැන හිතන්න.',
     en: 'Think of the day we first met…',
   },
   date_hint_2: {
-    si: 'ඔය හැඟීම ඉලක්කම්වලට වඩා වැදගත් 🤍',
+    si: 'ඉලක්කම්වලට වඩා ඒ හැඟීම වැදගත් 🤍',
     en: 'The feeling matters more than the numbers 🤍',
   },
 
   // ── Chapter 1 ─────────────────────────────────────────────────────────────
   ch1_line1: {
-    si: 'අපි හමු වූයේ එක් වරක් පමණකි.',
+    si: 'අපි හමු වුණේ එකම එක වතාවක් විතරයි.',
     en: "We've only crossed paths once.",
   },
   ch1_line2: {
-    si: 'ඔබ ගැන ගොඩ දේ නොදනිමි.',
+    si: 'ඔයා ගැන මම තාම ගොඩක් දේවල් දන්නේ නැහැ.',
     en: "I don't know much about you.",
   },
   ch1_line3: {
-    si: 'ඔබත් මා ගැන දන්නේ නැති ඇති.',
+    si: 'ඔයාටත් මාව තාම හඳුනන්නේ නැතුව ඇති.',
     en: "You probably don't know me either.",
   },
   ch1_button: {
@@ -80,7 +82,7 @@ export const translations = {
 
   // ── Chapter 2 ─────────────────────────────────────────────────────────────
   ch2_intro: {
-    si: 'ඒ එක් හමුවීම තුළ, ඔබ ගැන සිහිවෙන කුඩා මොහොත් කිහිපයක් තිබේ.',
+    si: 'ඒ එකම හමුවීම ඇතුළේ... අදටත් මතකයේ රැඳුණු පුංචි මොහොත කිහිපයක් තිබුණා.',
     en: 'In that one meeting, there were small moments about you I still think about.',
   },
   ch2_button: {
@@ -90,15 +92,15 @@ export const translations = {
 
   // ── Chapter 3 ─────────────────────────────────────────────────────────────
   ch3_title: {
-    si: (name: string) => `${name}, ඔබට කියන්නේ…`,
+    si: (name: string) => `${name}... ඔයාට කියන්න ඕනේ දෙයක් තියෙනවා.`,
     en: (name: string) => `${name}, I need to tell you something.`,
   },
   ch3_body: {
-    si: 'මා හදවතේ ඇති හැඟීම සැබෑ ය. ඔබ තුළ පෙනෙන දේ සැබෑ ය. තවදුරටත් රහසේ රෙදා ගෙන ඉන්නට නොහැකිය.',
+    si: 'මගේ හිතේ තියෙන හැඟීම ඇත්තක්. ඔයා ගැන මට දැනෙන දේ ඇත්තක්. තවත් ඒ හැඟීම හිත ඇතුළේ සඟවාගෙන ඉන්න බැහැ.',
     en: "What I feel is real. What I see in you is real. I couldn't keep it to myself any longer.",
   },
   ch3_italic: {
-    si: 'ඔබ ගැන සිතීම ථීරාගේ ③ :\\nඔබ ඒ ඇමතුමට ළඟා ය.',
+    si: 'ඔයා... මට ගොඩාක් වැදගත්.',
     en: 'This moment matters. You matter deeply.',
   },
   ch3_button: {
@@ -108,33 +110,33 @@ export const translations = {
 
   // ── Envelope / Inside Letter ──────────────────────────────────────────────
   letter_line1: {
-    si: 'ඔබව දැක ඇත්තේ ඔය වරක් පමණකි.',
+    si: 'ඔයාව දැකලා තියෙන්නේ එකම එක වතාවක් විතරයි.',
     en: "I've only seen you that once.",
   },
   letter_line2: {
-    si: 'සමහරවිට ඒ කාලෙ ඉක්මන්. සමහරවිට ඔබ ඒකත් දන්නේ නැහැ.',
+    si: 'සමහරවිට ඒ ඉක්මන්. සමහරවිට ඔයාට ඒ දැනෙනවාත් ඇති.',
     en: 'Maybe this feels unexpected. Maybe too soon.',
   },
   letter_line3: {
-    si: 'නමුත් ඔබ හමු වීමෙන් ජීවිතයට ලැබිච්ච ස්පර්ශය — ඒ ගැන කිසිදාකවත් නොකියා ඉන්නට නොහැකිය.',
+    si: 'ඒත් ඔයාව හමුවීම මගේ ජීවිතයට දැනුණු ඒ පුංචි වෙනස... ඒ ගැන කිසිම දිනෙක නිහඬව ඉන්න බැහැ.',
     en: 'But the way meeting you touched my life — I could never stay silent about that.',
   },
   letter_line4: {
-    si: 'ඔබව තේරුම් ගන්නට, ඔබ ළඟ ඉන්නට — ඒ අවස්ථාව ඉල්ලන්නට අවාචාරයක් නොවෙयी.',
+    si: 'ඔයාව තේරුම් ගන්නට, ඔයා ළඟ ඉන්නට... ඒ අවස්ථාව ඉල්ලීම ගැන ලජ්ජාවක් නැහැ.',
     en: "I'd genuinely love the chance to know you better.",
   },
   letter_closing: {
-    si: 'සියලු අවංකතාවකින්',
+    si: 'ඇත්ත හදවතකින්',
     en: 'with all my honesty',
   },
 
   // ── Reveal ────────────────────────────────────────────────────────────────
   reveal_line1: {
-    si: 'මෙම සුවිශේෂ කතාව ලිවීම…',
+    si: 'මේ විශේෂ කතාව ලියවුණේ...',
     en: 'The person this was written for…',
   },
   reveal_name: {
-    si: (name: string) => `${name}, ඔබ ය.`,
+    si: (name: string) => `ඒ ඔයා, ${name}.`,
     en: (name: string) => `${name}, it's you.`,
   },
   reveal_button: {
@@ -144,43 +146,43 @@ export const translations = {
 
   // ── Memory Scene ──────────────────────────────────────────────────────────
   memory_label: {
-    si: 'රැදී ඇති මතකයක්',
+    si: 'හිතේ රැඳුණු මතකයක්',
     en: 'A memory worth keeping',
   },
   memory_days: {
     si: (days: number) =>
-      `ඒ මොහොතෙන් ${days} දිනක් ගෙවී ඇත — ඒත් ඔබ ගැන සිතීම නතර නොවේ.`,
+      `ඒ මොහොතෙන් දිනකි ${days}ක් ගෙවිලා... ඒත් ඔයා ගැන හිතන එක තාමත් නතර වෙලා නැහැ.`,
     en: (days: number) =>
       `${days} days have passed since that moment — yet thinking of you never stopped.`,
   },
   memory_body: {
-    si: 'ඒ රාත්‍රියේ සිට සෑම දිනකම ඔබ ගැන සිතිණ — ඒ හමුවීම, ඔය ඇස් දෙක, ඒ ගෙලවා ගිය ස්වරය.',
+    si: 'ඒ දවසෙ ඉඳලා... සෑම රෑකම ඔයා ගැන හිතෙනවා. ඒ හමුවීම, ඔය ඇස් දෙක, ඔයා කතා කළ විදිය.',
     en: 'Every day since then, I thought about you — that meeting, those eyes, the way you spoke.',
   },
   memory_question: {
-    si: '‟ ඔය හැඟීමට ඉඩ දෙන්නට කැමතිද? "',
+    si: '"... ඔය හැඟීමට ඉඩ දෙන්න ඔයා කැමතිද?"',
     en: '"Would you like to explore this connection with me?"',
   },
   memory_button: {
-    si: 'සිතා බලා පිළිතුරු දෙන්න →',
+    si: 'ඔයාගේ හිතේ ඇත්ත →',
     en: 'Answer gently →',
   },
 
   // ── Response Screen ───────────────────────────────────────────────────────
   response_prompt: {
-    si: 'ඔබේ හදවතේ ඇත්ත කුමක්ද?',
+    si: 'ඔයාගේ හිතේ ඇත්ත කුමක්ද?',
     en: 'What does your heart say?',
   },
   response_sub: {
-    si: 'ඕනෑම තේරීමක් හොඳ ය — ඔබ ම තිත් ය.',
+    si: 'ඕනෑම තේරීමක් හරි — ඔයා තමයි ඒ.',
     en: 'No pressure — whatever you feel is perfectly okay.',
   },
   response_yes: {
-    si: '💙 ඔව්, ඔබව දැන ගන්නට කැමතිය',
+    si: '💙 ඔව්, ඔයාව හඳුනගන්නට කැමතියි',
     en: "💙 I'd like to get to know you",
   },
   response_thanks: {
-    si: '🤍 ඔබේ හදවතේ ධෛර්යය ගැන ස්තූතියි',
+    si: '🤍 ඔයාගේ ධෛර්යය ගැන ස්තූතියි',
     en: '🤍 Thank you for telling me this',
   },
   response_time: {
@@ -190,71 +192,72 @@ export const translations = {
 
   // ── Response Replies ──────────────────────────────────────────────────────
   reply_yes: {
-    si: 'ඔබේ ඔව් — ඒ වචනය ෙම් ජීවිතේ ළඟ ම ළගාව ය. ස්තූතියි, ඇත්ත.',
+    si: 'ඔයාගේ "ඔව්"... ඒ වචනය මගේ ජීවිතේ ළඟම ළඟා. ඇත්තෙන්ම ස්තූතියි.',
     en: 'Your yes — it means the world to me. Thank you, truly.',
   },
   reply_thanks: {
-    si: 'ඔබ ඒ කිව්ව ගමනේ, ෙම් හදවතට ළඟා ය. ඔබ ගේ කාලය ගෙව්ව ගේ ස්තූතියි.',
+    si: 'ඔයා මේ සියල්ල කියෙව්වා... ඒ තමයි ගොඩාකට වඩා වටින දේ. ස්තූතියි.',
     en: 'The fact that you read all of this means so much. Thank you for your time.',
   },
   reply_time: {
-    si: 'ඒ ඉඩ ඔබට ය. කාලය ගෙව ගන්න, ඔබ ගැන ස්වාමිය. ❤',
+    si: 'ඒ කාලය ඔයාට ඕනේ තරම් ගන්න. ඔයා ගැන හොඳින් ඉන්න. ❤',
     en: 'All the time you need is yours. Take care of yourself. ❤',
   },
   whatsapp_button: {
-    si: 'WhatsApp හරහා කතා කරන්න 💬',
+    si: 'WhatsApp එකෙන් කතා කරමු 💬',
     en: 'Message on WhatsApp 💬',
   },
 
   // ── Love Letter (correct date) ────────────────────────────────────────────
   letter_correct_title: {
-    si: 'ඔබ ඒ දිනය මතකයේ රැකගත්තා',
+    si: 'ඔයා ඒ දිනය මතකයේ රැකගත්තා',
     en: 'You Remembered It',
   },
   letter_correct_body1: {
     si: (name: string) =>
-      `${name}, ඔබ ඒ දිනය මතකයේ ඇතිව ගෙන ගිය සේ ෙම් සිත ෙම්ල ී ය — ඔව්, ඔව් ය.`,
+      `${name}... ඔයා ඒ දිනය මතකයේ රැකගෙන හිටියා කියන එකෙන් මට ඕනේ දේ ඔක්කොම කිව්වා.`,
     en: (name: string) =>
       `${name}, the fact that you remembered tells me everything I need to know.`,
   },
   letter_correct_body2: {
     si: (days: number) =>
-      `ඒ සිට ${days} දිනක් ගෙවිලා — ඒත් ඒ මොහොත හිතෙන සේ, ඊයේ ය.`,
+      `ඒ ඉඳලා දිනකි ${days}ක් ගෙවිලා... ඒත් ඒ මොහොත හිතෙන්නේ ඊයේ වගේ.`,
     en: (days: number) =>
       `${days} days have passed, yet that moment still feels like yesterday.`,
   },
   letter_correct_closing1: {
-    si: 'ඒ කුඩා දිනය රැගෙන ඒ — ලස්සන මතකයක් ය.',
+    si: 'ඒ පුංචි දිනය රැගෙන... ලස්සන මතකයක් ගෙනාවා.',
     en: 'A little date carrying a beautiful memory.',
   },
   letter_correct_closing2: {
-    si: 'ඔව් — සමහර මොහොත නිහඬ ලෙස ශ්‍රේෂ්ඨ ය. ඒ ගෙනාවේ ඔබ ය.',
+    si: 'සමහර මොහොත නිහඬව ශ්‍රේෂ්ඨ වෙනවා... ඒ ශ්‍රේෂ්ඨකම ගෙනාවේ ඔයා.',
     en: 'Some moments are quietly extraordinary. You made this one.',
   },
   letter_correct_closing3: {
-    si: 'ඒ දිනය මතකයේ රැකගත්ත ඔබට ස්තූතියි',
+    si: 'ඒ දිනය මතකයේ රැකගත්ත ඔයාට ස්තූතියි',
     en: 'Thank you for remembering',
   },
 
   // ── Love Letter (wrong date) ──────────────────────────────────────────────
   letter_wrong_title: {
-    si: 'ඒක හරි, කිසි ගැටළුවක් නෑ ❤',
+    si: 'ගැටළුවක් නැහැ... ❤',
     en: "That's Okay ❤",
   },
   letter_wrong_body1: {
     si: (name: string) =>
-      `${name}, ඉලක්කම් ටිකක් මාරු වූවත් — ෙම් මොහොතේ අදහස වෙනස් නොවේ.`,
+      `${name}... ඉලක්කම් ටිකක් වෙනස් වුණත් — මේ මොහොතේ අර්ථය කිසිදිනෙකත් වෙනස් වෙන්නේ නැහැ.`,
     en: (name: string) =>
       `${name}, the numbers may have been a little different — but the meaning here never changes.`,
   },
   letter_wrong_body2: {
-    si: 'සමහර මතක දිනදර්ශනවල රදන්නේ නැත — ඒවා හදවත්වල ය ✨',
+    si: 'සමහර මතක දිනදර්ශනෙ රදන්නේ නැහැ... ඒවා හිතේ රදනවා ✨',
     en: "Some memories aren't kept in calendars... they live in our hearts ✨",
   },
   letter_wrong_closing: {
-    si: 'ඉදිරිය ෙම් ගමනේ — ඔබ හා',
+    si: 'මේ ගමන ඉදිරියට... ඔයා එක්ක.',
     en: "Let's continue this journey — together",
   },
+
 } as const
 
 // Helper function
