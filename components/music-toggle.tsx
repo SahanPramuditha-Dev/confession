@@ -3,30 +3,107 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import { ENABLE_MUSIC } from '@/lib/constants'
-import { audioSystem } from '@/lib/audio-system'
 
 export function MusicToggle() {
-  const [enabled, setEnabled] = useState(false)
-  const ambientRef = useRef<{ stop: () => void } | null>(null)
+  const audioRef = useRef<HTMLAudioElement | null>(null)
+  const [enabled, setEnabled] = useState(true)
+  const [started, setStarted] = useState(false)
 
+  // Create the audio element once on mount
   useEffect(() => {
-    return () => {
-      ambientRef.current?.stop()
+    if (!ENABLE_MUSIC || typeof window === 'undefined') return
+
+    const audio = new Audio('/music.m4a')
+    audio.loop = true
+    audio.volume = 0
+    audioRef.current = audio
+
+    // Fade in smoothly over 3 seconds
+    const fadeIn = () => {
+      let vol = 0
+      const step = () => {
+        if (!audioRef.current) return
+        vol = Math.min(vol + 0.02, 0.4) // max volume 40%
+        audioRef.current.volume = vol
+        if (vol < 0.4) requestAnimationFrame(step)
+      }
+      requestAnimationFrame(step)
     }
+
+    // Auto-play on first user interaction (browser policy requires this)
+    const tryAutoPlay = () => {
+      if (started || !audioRef.current) return
+      audioRef.current
+        .play()
+        .then(() => {
+          setStarted(true)
+          fadeIn()
+        })
+        .catch(() => {
+          // Browser blocked it — user will need to tap the button
+        })
+      document.removeEventListener('click', tryAutoPlay)
+      document.removeEventListener('touchstart', tryAutoPlay)
+      document.removeEventListener('keydown', tryAutoPlay)
+    }
+
+    // Try immediately (works on some browsers / after reload)
+    audioRef.current
+      .play()
+      .then(() => {
+        setStarted(true)
+        fadeIn()
+      })
+      .catch(() => {
+        // Not allowed yet — wait for any user gesture
+        document.addEventListener('click', tryAutoPlay)
+        document.addEventListener('touchstart', tryAutoPlay)
+        document.addEventListener('keydown', tryAutoPlay)
+      })
+
+    return () => {
+      audio.pause()
+      audio.src = ''
+      document.removeEventListener('click', tryAutoPlay)
+      document.removeEventListener('touchstart', tryAutoPlay)
+      document.removeEventListener('keydown', tryAutoPlay)
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const toggle = () => {
-    if (!ENABLE_MUSIC) return
+    if (!ENABLE_MUSIC || !audioRef.current) return
 
     if (enabled) {
-      ambientRef.current?.stop()
-      ambientRef.current = null
+      // Fade out then pause
+      let vol = audioRef.current.volume
+      const fadeOut = () => {
+        if (!audioRef.current) return
+        vol = Math.max(vol - 0.02, 0)
+        audioRef.current.volume = vol
+        if (vol > 0) requestAnimationFrame(fadeOut)
+        else audioRef.current.pause()
+      }
+      fadeOut()
       setEnabled(false)
-      return
+    } else {
+      // Resume and fade in
+      audioRef.current
+        .play()
+        .then(() => {
+          setStarted(true)
+          let vol = 0
+          const fadeIn = () => {
+            if (!audioRef.current) return
+            vol = Math.min(vol + 0.02, 0.4)
+            audioRef.current.volume = vol
+            if (vol < 0.4) requestAnimationFrame(fadeIn)
+          }
+          fadeIn()
+        })
+        .catch(() => {})
+      setEnabled(true)
     }
-
-    ambientRef.current = audioSystem.startSoftAmbient()
-    setEnabled(true)
   }
 
   if (!ENABLE_MUSIC) return null
@@ -38,10 +115,11 @@ export function MusicToggle() {
       animate={{ opacity: 1 }}
       transition={{ delay: 2 }}
       onClick={toggle}
-      aria-label={enabled ? 'Turn music off' : 'Turn music on'}
+      aria-label={enabled ? 'Pause music' : 'Play music'}
       className="fixed bottom-[calc(1rem+env(safe-area-inset-bottom))] right-4 z-[60] w-11 h-11 rounded-full bg-white/10 border border-white/20 backdrop-blur-md flex items-center justify-center text-sm text-white hover:bg-white/20 transition-all"
     >
-      {enabled ? '♪' : '♫'}
+      {enabled && started ? '♪' : '♫'}
     </motion.button>
   )
 }
+
