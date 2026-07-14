@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { recordResponse, recordEvent } from '@/lib/db'
+import { recordResponse } from '@/lib/db'
 
 export async function POST(request: NextRequest) {
   try {
@@ -7,42 +7,24 @@ export async function POST(request: NextRequest) {
     const { sessionId, question, answer } = body
 
     if (!sessionId || !question || !answer) {
-
       return NextResponse.json(
         { error: 'Missing required fields: sessionId, question, answer' },
         { status: 400 }
       )
     }
 
-    const nameInput = body?.nameInput
-    const enteredDate = body?.enteredDate
-    const selection = body?.selection
-    const whatsappClicked = body?.whatsappClicked
-
-    // Record the response + separate response_entries doc
     await recordResponse(sessionId, question, answer, {
-      nameInput: nameInput ?? null,
-      enteredDate: enteredDate ?? null,
-      selection: selection ?? null,
-      whatsappClicked: Boolean(whatsappClicked),
+      userName: body?.nameInput ?? null,
+      enteredDate: body?.enteredDate ?? null,
+      selection: body?.selection ?? null,
+      whatsappClicked: Boolean(body?.whatsappClicked),
     })
-
-
-
-    // Also record as an event
-    await recordEvent(sessionId, 'response_recorded', 'responses', {
-      question,
-      answer,
-      timestamp: new Date().toISOString(),
-    })
-
-    console.log('[Response API] Recorded response for session:', sessionId, 'Question:', question)
 
     return NextResponse.json({ success: true })
   } catch (error) {
     console.error('[Response API] Error:', error)
     return NextResponse.json(
-      { error: 'Failed to record response', details: error instanceof Error ? error.message : 'Unknown error' },
+      { error: 'Failed to record response' },
       { status: 500 }
     )
   }

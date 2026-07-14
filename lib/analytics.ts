@@ -91,16 +91,9 @@ class AnalyticsTracker {
     this.sendToServer(event)
   }
 
-  private async sendToServer(event: AnalyticsEvent) {
-    try {
-      await fetch('/api/analytics', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(event),
-      })
-    } catch (error) {
-      console.error('[v0] Failed to send analytics event:', error)
-    }
+  private async sendToServer(_event: AnalyticsEvent) {
+    // Analytics events are no longer persisted to the database.
+    // Only name, date, answer, and whatsappClicked are saved (via /api/record-response etc.)
   }
 
   setUserName(name: string) {
