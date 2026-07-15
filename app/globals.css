@@ -163,4 +163,16 @@
   html {
     @apply scroll-smooth;
   }
+
+  /* Sinhala script needs extra vertical space for diacritics (ී ු ූ ො etc.) */
+  h1, h2, h3, p, span, button {
+    line-height: 1.6;
+  }
+
+  /* Prevent gradient-clipped text from cutting off tall Sinhala vowel marks */
+  .bg-clip-text {
+    overflow: visible;
+    padding-top: 0.15em;
+    padding-bottom: 0.1em;
+  }
 }
