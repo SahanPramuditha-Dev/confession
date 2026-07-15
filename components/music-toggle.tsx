@@ -16,9 +16,15 @@ export function MusicToggle() {
     const audio = new Audio('/music.m4a')
     audio.loop = true
     audio.volume = 0
+
+    // Helps on mobile browsers (iOS/Safari/embedded WebViews)
+    audio.preload = 'auto'
+    ;(audio as any).playsInline = true
+
     audioRef.current = audio
 
     // Fade in smoothly over 3 seconds
+
     const fadeIn = () => {
       let vol = 0
       const step = () => {
@@ -33,7 +39,8 @@ export function MusicToggle() {
     // Auto-play on first user interaction (browser policy requires this)
     const tryAutoPlay = () => {
       if (started || !audioRef.current) return
-      audioRef.current
+      const a = audioRef.current
+      a
         .play()
         .then(() => {
           setStarted(true)
@@ -42,9 +49,22 @@ export function MusicToggle() {
         .catch(() => {
           // Browser blocked it — user will need to tap the button
         })
+
+      // Remove gesture listeners once we have attempted to unlock
       document.removeEventListener('click', tryAutoPlay)
       document.removeEventListener('touchstart', tryAutoPlay)
+      document.removeEventListener('pointerdown', tryAutoPlay)
       document.removeEventListener('keydown', tryAutoPlay)
+      document.removeEventListener('visibilitychange', onVisibilityChange)
+    }
+
+    const onVisibilityChange = () => {
+
+      // Some mobile browsers pause media when tab visibility changes.
+      // Retry when user returns.
+      if (document.visibilityState === 'visible') {
+        tryAutoPlay()
+      }
     }
 
     // Try immediately (works on some browsers / after reload)
@@ -56,10 +76,14 @@ export function MusicToggle() {
       })
       .catch(() => {
         // Not allowed yet — wait for any user gesture
-        document.addEventListener('click', tryAutoPlay)
-        document.addEventListener('touchstart', tryAutoPlay)
-        document.addEventListener('keydown', tryAutoPlay)
+        document.addEventListener('click', tryAutoPlay, { once: true })
+        document.addEventListener('touchstart', tryAutoPlay, { once: true })
+        document.addEventListener('pointerdown', tryAutoPlay, { once: true })
+        document.addEventListener('keydown', tryAutoPlay, { once: true })
       })
+
+    document.addEventListener('visibilitychange', onVisibilityChange)
+
 
     return () => {
       audio.pause()
