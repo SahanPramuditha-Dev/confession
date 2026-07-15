@@ -15,6 +15,7 @@ interface MemorySceneProps {
 
 export function MemoryScene({ name = 'You', onContinue }: MemorySceneProps) {
   const { lang } = useLang()
+
   useEffect(() => {
     analyticsTracker.trackEvent('response_screen_viewed', 'memory')
   }, [])
@@ -44,9 +45,6 @@ export function MemoryScene({ name = 'You', onContinue }: MemorySceneProps) {
           <h2 className="font-serif text-4xl md:text-5xl font-light text-white">
             {name}…
           </h2>
-          <p className="text-lg text-white/80 font-light">
-            {t(lang, 'memory_days', daysAgo)}
-          </p>
         </motion.div>
 
         <GlassCard className="p-5 sm:p-8 md:p-10">
@@ -57,9 +55,15 @@ export function MemoryScene({ name = 'You', onContinue }: MemorySceneProps) {
             className="space-y-6 text-center"
           >
             <p className="text-white/90 font-light leading-relaxed text-lg">
+              {t(lang, 'memory_days', daysAgo)}
+            </p>
+            <p className="text-white/75 font-light leading-relaxed text-base whitespace-pre-line">
+              {t(lang, 'memory_days_sub')}
+            </p>
+            <p className="text-white/85 font-light leading-relaxed text-lg whitespace-pre-line">
               {t(lang, 'memory_body')}
             </p>
-            <p className="text-xl font-light text-transparent bg-clip-text bg-gradient-to-r from-[#FFB7B2] via-[#FFE5B4] to-[#E2D1F9] italic font-serif">
+            <p className="text-xl font-light text-transparent bg-clip-text bg-gradient-to-r from-[#FFB7B2] via-[#FFE5B4] to-[#E2D1F9] italic font-serif whitespace-pre-line leading-relaxed">
               {t(lang, 'memory_question')}
             </p>
           </motion.div>

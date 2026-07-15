@@ -110,14 +110,14 @@ export function LoveLetter({ name, isCorrectDate }: LoveLetterProps) {
               transition={{ delay: 1.4, duration: 1 }}
               className="text-white/75 font-serif text-[17px] leading-[1.8] mb-5"
             >
-              <span className="font-medium text-white/90">{name}</span>{', '}{t(lang, 'letter_correct_body1', name).replace(name + ', ', '')}
+              {t(lang, 'letter_correct_body1', name)}
             </motion.p>
 
             <motion.p
               initial={{ opacity: 0, y: 15 }}
               animate={showContent ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: 1.8, duration: 1 }}
-              className="text-white/70 font-serif text-[17px] leading-[1.8] mb-8"
+              className="text-white/70 font-serif text-[17px] leading-[1.8] mb-8 whitespace-pre-line"
             >
               {t(lang, 'letter_correct_body2', daysAgo)}
             </motion.p>
@@ -179,7 +179,7 @@ export function LoveLetter({ name, isCorrectDate }: LoveLetterProps) {
             transition={{ delay: 0.4, duration: 1 }}
             className="font-serif text-3xl md:text-4xl font-light text-white/90 mb-1"
           >
-            That&apos;s Okay <span className="text-[#E63946] drop-shadow-[0_0_8px_rgba(230,57,70,0.4)] inline-block">❤️</span>
+            {t(lang, 'letter_wrong_title')}
           </motion.h2>
 
           <motion.div
@@ -195,14 +195,14 @@ export function LoveLetter({ name, isCorrectDate }: LoveLetterProps) {
             transition={{ delay: 1.4, duration: 1 }}
             className="text-white/75 font-serif text-[17px] leading-[1.8] mb-5"
           >
-            <span className="font-medium text-white/90">{name}</span>{', '}{t(lang, 'letter_wrong_body1', name).replace(name + ', ', '')}
+            {t(lang, 'letter_wrong_body1', name)}
           </motion.p>
 
           <motion.p
             initial={{ opacity: 0, y: 15 }}
             animate={showContent ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 1.8, duration: 1 }}
-            className="text-white/70 font-serif text-[17px] leading-[1.8] mb-8"
+            className="text-white/70 font-serif text-[17px] leading-[1.8] mb-8 whitespace-pre-line"
           >
             {t(lang, 'letter_wrong_body2')}
           </motion.p>

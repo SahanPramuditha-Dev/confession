@@ -458,7 +458,7 @@ export default function Page() {
             exit={{ opacity: 0 }}
             className="relative min-h-screen flex flex-col items-center justify-center px-4 py-20"
           >
-            <div className="max-w-2xl space-y-10 text-center">
+            <div className="max-w-2xl space-y-8 text-center">
               <motion.h2
                 initial={{ opacity: 0, y: 24 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -468,18 +468,42 @@ export default function Page() {
                 {t(lang, 'ch3_title', name)}
               </motion.h2>
               <motion.p
-                initial={{ opacity: 0, y: 24 }}
+                initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1, duration: 1.2 }}
+                transition={{ delay: 0.9, duration: 1 }}
                 className="text-lg sm:text-xl md:text-2xl font-light text-white/90 leading-relaxed"
               >
-                {t(lang, 'ch3_body')}
+                {t(lang, 'ch3_line1')}
+              </motion.p>
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1.5, duration: 1 }}
+                className="text-lg sm:text-xl font-light text-white/80 leading-relaxed"
+              >
+                {t(lang, 'ch3_line2')}
+              </motion.p>
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 2.1, duration: 1 }}
+                className="text-lg sm:text-xl font-light text-white/75 leading-relaxed whitespace-pre-line"
+              >
+                {t(lang, 'ch3_line3')}
+              </motion.p>
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 2.8, duration: 1 }}
+                className="text-lg sm:text-xl font-light text-white/70 leading-relaxed whitespace-pre-line"
+              >
+                {t(lang, 'ch3_line4')}
               </motion.p>
               <motion.p
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ delay: 1.8, duration: 1 }}
-                className="text-lg text-white/60 italic font-serif"
+                transition={{ delay: 3.5, duration: 1 }}
+                className="text-lg text-white/60 italic font-serif leading-relaxed whitespace-pre-line"
               >
                 {t(lang, 'ch3_italic')}
               </motion.p>
@@ -487,7 +511,7 @@ export default function Page() {
             <motion.button
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 2.4 }}
+              transition={{ delay: 4.2 }}
               whileHover={{ scale: 1.06 }}
               whileTap={{ scale: 0.96 }}
               onClick={() => handleContinue('envelope')}
@@ -533,19 +557,27 @@ export default function Page() {
             </motion.div>
 
             <div className="text-center space-y-6 max-w-2xl">
-              <motion.h2
-                initial={{ opacity: 0, y: 32 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.8, duration: 1.2 }}
-                className="font-serif text-3xl sm:text-4xl md:text-5xl font-light text-white"
-              >
-                {t(lang, 'reveal_line1')}
-              </motion.h2>
               <motion.p
                 initial={{ opacity: 0, y: 32 }}
                 animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.8, duration: 1.2 }}
+                className="font-serif text-2xl sm:text-3xl md:text-4xl font-light text-white/80 whitespace-pre-line leading-relaxed"
+              >
+                {t(lang, 'reveal_line1')}
+              </motion.p>
+              <motion.p
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1.5, duration: 1.2 }}
-                className="font-serif text-2xl sm:text-3xl md:text-4xl font-light bg-gradient-to-r from-[#FFB7B2] to-[#E2D1F9] bg-clip-text text-transparent"
+                className="font-serif text-xl sm:text-2xl md:text-3xl font-light text-white/70"
+              >
+                {t(lang, 'reveal_line2')}
+              </motion.p>
+              <motion.p
+                initial={{ opacity: 0, y: 32, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ delay: 2.4, duration: 1.2, ease: 'easeOut' }}
+                className="font-serif text-2xl sm:text-3xl md:text-4xl font-semibold bg-gradient-to-r from-[#FFB7B2] to-[#E2D1F9] bg-clip-text text-transparent"
               >
                 {name ? t(lang, 'reveal_name', name) : '…'}
               </motion.p>
@@ -554,7 +586,7 @@ export default function Page() {
             <motion.button
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 2.2 }}
+              transition={{ delay: 3.2 }}
               whileHover={{ scale: 1.08, boxShadow: '0 0 32px rgba(255, 77, 109, 0.5)' }}
               whileTap={{ scale: 0.96 }}
               onClick={() => handleContinue('memory')}
@@ -595,7 +627,7 @@ export default function Page() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.4 }}
-                  className="font-serif text-2xl md:text-3xl font-light text-white/90"
+                  className="font-serif text-2xl md:text-3xl font-light text-white/90 whitespace-pre-line leading-relaxed"
                 >
                   {response === 'yes' && t(lang, 'reply_yes')}
                   {response === 'thanks' && t(lang, 'reply_thanks')}
@@ -634,7 +666,7 @@ export default function Page() {
                 <h2 className="font-serif text-3xl md:text-4xl font-light text-white">
                   {t(lang, 'response_prompt')}
                 </h2>
-                <p className="text-white/60 text-sm font-light">
+                <p className="text-white/60 text-sm font-light whitespace-pre-line leading-relaxed">
                   {t(lang, 'response_sub')}
                 </p>
 

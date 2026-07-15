@@ -2,23 +2,26 @@
 
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
-
-const timelineItems = [
-  { text: 'The day I saw you.' },
-  { text: "I couldn't stop thinking about that moment." },
-  { text: 'I wondered if I should simply walk away.' },
-  { text: 'But I decided honesty is better than regret.' },
-]
+import { useLang } from '@/lib/lang-context'
+import { t } from '@/lib/i18n'
 
 export function TimelineCards() {
+  const { lang } = useLang()
   const { ref, inView } = useInView({
     triggerOnce: true,
     threshold: 0.1,
   })
 
+  const items = [
+    t(lang, 'timeline_1'),
+    t(lang, 'timeline_2'),
+    t(lang, 'timeline_3'),
+    t(lang, 'timeline_4'),
+  ]
+
   return (
     <div ref={ref} className="max-w-2xl mx-auto space-y-4">
-      {timelineItems.map((item, index) => (
+      {items.map((text, index) => (
         <motion.div
           key={index}
           initial={{ opacity: 0, x: -50 }}
@@ -38,7 +41,7 @@ export function TimelineCards() {
             whileHover={{ x: 10 }}
             className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-xl p-4 flex-1"
           >
-            <p className="text-lg text-white font-light">{item.text}</p>
+            <p className="text-lg text-white font-light">{text}</p>
           </motion.div>
         </motion.div>
       ))}
