@@ -16,9 +16,9 @@ A beautifully animated, personalized digital experience that tells the story of 
 | --- | --- | --- | --- |
 | ![Open Letter](Screenshots/9-LetterOpened.png) | ![Every Word](Screenshots/10-EveryWord.png) | ![Confess Prompt](Screenshots/11-Confess.png) | ![Reply Options](Screenshots/12-Reply.png) |
 
-| Yes Response | | | |
-| --- | --- | --- | --- |
-| ![Yes Response](Screenshots/13-Yes.png) |  |  |  |
+**Yes Response**
+
+![Yes Response](Screenshots/13-Yes.png)
 
 ## Features
 
